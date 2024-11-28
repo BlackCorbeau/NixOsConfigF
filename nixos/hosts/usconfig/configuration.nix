@@ -9,7 +9,12 @@
       ./pockets.nix
       ./hardware-configuration.nix
       ./models/bluetooth.nix
+      #./services/thingsboard.nix
+      #./services/node-red.nix
+      #./services/postgresql.nix
     ];
+
+  #home.packages = [ pkgs.callPackage ./pockets/thingsboard.nix {} ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -84,6 +89,12 @@
         ];
     };
   };
+
+  virtualisation.virtualbox.host.enable = true; #Installing virtualBox for IOT lessons
+  users.extraGroups.vboxusers.members = [ "user-with-access-to-virtualbox" ];
+
+
+  virtualisation.docker.enable = true;
 
   # Enable automatic login for the user.
   services.xserver.displayManager.autoLogin.enable = true;

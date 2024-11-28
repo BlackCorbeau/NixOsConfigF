@@ -1,4 +1,9 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+
+#let
+#  thingsboard = import ./pockets/thingsboard.nix { inherit pkgs; };
+#in
+{
   nixpkgs.config = {
     allowUnfree = true;
     permittedInsecurePackages = ["python-2.7.18.8" "electron-25.9.0" "freeimage-unstable-2021-11-01" "obsidian-1.5.12"];
@@ -25,7 +30,7 @@
     neofetch
     mako
     file
-    btop 
+    btop
     nix-index
     unzip
     scrot
@@ -56,33 +61,38 @@
     (python3.withPackages (ps: with ps; [ requests bpython ]))
     python311Packages.pip
 
-    #IDES
+    # IDES
     jetbrains.idea-community
 
-    #languages
+    # Languages
     vscode
     nodejs
     gcc
     cmake
     jdk
     maven
-   
-    #Bluetoth
+
+    # Bluetooth
     bluez
     bluez-tools
- 
-    #Sounds
+
+    # Sounds
     pipewire
     pulseaudio
     pamixer
 
-    #obs-studio
+    # obs-studio
     obs-studio
-   
-    #GameManager
-  ];
 
-fonts.packages = with pkgs; [
+    #videoManager
+    vlc
+
+    # New Packages
+    pkgs.nodePackages.node-red
+    pkgs.postgresql
+  ];# ++ [thingsboard];
+
+  fonts.packages = with pkgs; [
     jetbrains-mono
     noto-fonts
     noto-fonts-emoji
@@ -93,5 +103,5 @@ fonts.packages = with pkgs; [
     ubuntu_font_family
     unifont
     (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
-  ]; 
+  ];
 }
