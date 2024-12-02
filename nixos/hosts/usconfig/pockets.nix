@@ -87,9 +87,8 @@
     #videoManager
     vlc
 
-    # New Packages
-    pkgs.nodePackages.node-red
-    pkgs.postgresql
+    #learning
+    obsidian
   ];# ++ [thingsboard];
 
   fonts.packages = with pkgs; [

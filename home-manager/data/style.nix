@@ -9,7 +9,10 @@
     base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
     polarity = "dark";
 
-    image = /home/kirill/wallpapers/tanjiro-kamado-3840x2160-18414.jpeg;
+    image = pkgs.fetchurl {
+      url = "https://99px.ru/sstorage/53/2024/03/mid_357241_413672.jpg";
+      sha256 = "sha256-evP7zstPa0ztNs/dUJ8G5p+/L2maIKZASeuONJ1C0h0=";
+    }; 
 
     fonts = {
       monospace = {
