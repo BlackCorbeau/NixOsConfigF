@@ -4,8 +4,8 @@
   programs.hyprlock = let
     image = pkgs.fetchurl {
       name = "lock_background.png";
-      url = "https://art.kartinkof.club/uploads/posts/2023-06/1686192270_art-kartinkof-club-p-anime-arti-na-telefon-4k-48.png";
-      hash = "sha256-BL3w5QWokjknovqLyL7LTGda9yEXHWGuMrU8g0kPiYY=";
+      url = "https://pibig.info/uploads/posts/2022-11/thumbs/1668799231_10-pibig-info-p-nyaya-oboi-11.png";
+      hash = "sha256-cPq9Ef7bg+26k9IZ27RAm7UAEuGM+gxSX29hF46HapU=";
     };
   in {
     enable = true;
@@ -27,17 +27,17 @@
         size = "360, 60";
         color = "rgba(17, 17, 17, 1.0)";
         rounding = -1;
-        border_size = 8;
+        border_size = 3;
         border_color = "rgba(0, 207, 230, 1.0)";
         rotate = 0;
         xray = false;
 
-        position = "0, 80";
+        position = "750, -300";
         halign = "center";
         valign = "center";
-      };
+        };
 
-      label = {
+     label = {
         text = "Hi there, $USER";
         text_align = "center";
         color = "rgba(200, 200, 200, 1.0)";
@@ -45,7 +45,20 @@
         font_family = "Noto Sans";
         rotate = 0;
 
-        position = "0, 80";
+        position = "750, -300";
+        halign = "center";
+        valign = "center";
+      };
+
+      DTlabel = {
+        text = "$(date +'%Y-%m-%d %H:%M:%S')";
+        text_align = "center";
+        color = "rgba(200, 200, 200, 1.0)";
+        font_size = 20;
+        font_family = "Noto Sans";
+        rotate = 0;
+
+        position = "750, -200";
         halign = "center";
         valign = "center";
       };
@@ -78,7 +91,7 @@
         invert_numlock = false;
         swap_font_color = false;
 
-        position = "0, -20";
+        position = "750, -400";
         halign = "center";
         valign = "center";
       };
