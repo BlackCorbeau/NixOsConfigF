@@ -1,7 +1,7 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-{ config, pkgs,libs,  ... }:
+{ config, pkgs, libs, lib, inputs,  ... }:
 
 {
   imports =
@@ -83,10 +83,28 @@
     users.kirill = {
         isNormalUser = true;
         description = "Kirill";
-        extraGroups = [ "networkmanager" "wheel" ];
+        extraGroups = [ "networkmanager" "wheel" "input" "libvirtd" ];
         packages = with pkgs; [
             #  thunderbird
         ];
+    };
+  };
+
+  services.greetd = let
+    tuigreet = pkgs.lib.getExe pkgs.greetd.tuigreet;
+    session = lib.getExe pkgs.hyprland;
+    username = "kirill";
+  in {
+    enable = true;
+    settings = {
+      initial_session = {
+        command = "${session}";
+        user = "${username}";
+      };
+      default_session = {
+        command = "${tuigreet} --greeting 'Welcome to NixOS!' --asterisks --remember --remember-user-session --time -cmd ${session}";
+        user = "greeter";
+      };
     };
   };
 
@@ -97,8 +115,8 @@
   virtualisation.docker.enable = true;
 
   # Enable automatic login for the user.
-  services.xserver.displayManager.autoLogin.enable = true;
-  services.xserver.displayManager.autoLogin.user = "kirill";
+  services.displayManager.autoLogin.enable = true;
+  services.displayManager.autoLogin.user = "kirill";
 
   hardware.bluetooth.enable = true; # enables support for Bluetooth
   hardware.bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot

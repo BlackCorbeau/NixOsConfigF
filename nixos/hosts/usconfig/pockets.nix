@@ -89,7 +89,7 @@
 
     #learning
     obsidian
-  ];# ++ [thingsboard];
+  ];
 
   fonts.packages = with pkgs; [
     jetbrains-mono

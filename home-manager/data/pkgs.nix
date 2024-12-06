@@ -6,5 +6,6 @@
         ./git.nix
         ./mako.nix
         ./yazi.nix
+        ./sleepMode.nix
     ];
 }
