@@ -228,7 +228,9 @@
         # Disable all effects
         "$mainMod Shift, G, exec, ~/.config/hypr/gamemode.sh "
         # Skreens
-        ''$mainMod CTRL, P, exec, alacritty -e sh -c "screenshot"''
+        ''$mainMod SHIFT, S, exec, alacritty -e sh -c "screenshot"''
+
+        '', F11, exec, alacritty -e sh -c "hyprlock"''
         
       ];
 
