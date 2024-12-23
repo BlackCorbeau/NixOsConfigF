@@ -8,5 +8,6 @@
         ./yazi.nix
         ./sleepMode.nix
         ./kitty.nix
+        ./home-aps.nix
     ];
 }
