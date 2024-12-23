@@ -7,5 +7,6 @@
         ./mako.nix
         ./yazi.nix
         ./sleepMode.nix
+        ./kitty.nix
     ];
 }

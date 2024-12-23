@@ -16,11 +16,15 @@
     pkgs.opera
     pkgs.git
     pkgs.telegram-desktop
-    pkgs.vpnc
+    
+    #terminals
+    kitty
     pkgs.alacritty
+    
     pkgs.wofi
     pkgs.google-chrome
     pkgs.yazi
+    pkgs.libsForQt5.kolourpaint
     nerdfonts
     pkgs.waybar
     grimblast
