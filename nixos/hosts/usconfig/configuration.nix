@@ -9,9 +9,7 @@
       ./pockets.nix
       ./hardware-configuration.nix
       ./models/bluetooth.nix
-      #./services/thingsboard.nix
-      #./services/node-red.nix
-      #./services/postgresql.nix
+      ./models/gamemode.nix
     ];
 
   #home.packages = [ pkgs.callPackage ./pockets/thingsboard.nix {} ];

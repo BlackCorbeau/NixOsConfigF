@@ -15,11 +15,10 @@
     home-manager
     pkgs.opera
     pkgs.git
-    pkgs.telegram-desktop
     
     #terminals
     kitty
-    pkgs.alacritty
+    alacritty
     
     pkgs.wofi
     pkgs.google-chrome
