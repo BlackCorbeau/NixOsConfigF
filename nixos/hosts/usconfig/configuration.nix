@@ -83,7 +83,11 @@
         description = "Kirill";
         extraGroups = [ "networkmanager" "wheel" "input" "libvirtd" ];
         packages = with pkgs; [
-            #  thunderbird
+            (wineWowPackages.full.override {
+            wineRelease = "staging";
+            mingwSupport = true;
+            })
+            winetricks
         ];
     };
   };
