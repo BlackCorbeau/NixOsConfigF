@@ -91,6 +91,7 @@
     vlc
 
     #learning
+    zoom-us
     obsidian
   ];
 

@@ -7,3 +7,4 @@
  winetricks dxvk
 Вот так!
 А потом по руководству сделааешь, ты же не тупой :)
+wine64 Battle.net-Setup.exe - для запуска
