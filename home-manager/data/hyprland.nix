@@ -135,6 +135,7 @@
           "swww init"
           "python3 ${lib.getExe wallpaper_changer}"
           "waybar"
+          "${lib.getExe' pkgs.udiskie "udiskie"}"
           "wl-paste --type text --watch cliphist store"
           "wl-paste --type image --watch cliphist store"
       ];

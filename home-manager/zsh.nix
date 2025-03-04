@@ -40,6 +40,7 @@
       screenshot_f="grimblast save screen ~/screenshot_$(date +\%Y-\%m-\%d_\%H-\%M-\%S).png";
       screenshot="grimblast save area ~/screenshot_$(date +\%Y-\%m-\%d_\%H-\%M-\%S).png";
       screenshot_c = "grimblast copy area";
+      loginPostgresql = "sudo -u postgres psql";
     };
 
     initExtra = ''

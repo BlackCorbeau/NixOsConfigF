@@ -10,6 +10,7 @@
       ./hardware-configuration.nix
       ./models/bluetooth.nix
       ./models/gamemode.nix
+      ./models/postgresql.nix
     ];
 
   #home.packages = [ pkgs.callPackage ./pockets/thingsboard.nix {} ];
@@ -114,6 +115,7 @@
 
   hardware.bluetooth.enable = true; # enables support for Bluetooth
   hardware.bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot
+  services.udisks2.enable = true;
 
   # Install firefox.
   programs.firefox.enable = true;

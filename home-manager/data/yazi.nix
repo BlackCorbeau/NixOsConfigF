@@ -5,6 +5,12 @@ let yazi-plugins = pkgs.fetchFromGitHub {
 		rev = "c5785059611624e20a37ba573620f30acc28a26a";
 		hash = "sha256-wlSBtabIsEUJhuHmXwgpSnwZp9WaVQFBg6s1XXjubrE=";
 	};
+	starship = pkgs.fetchFromGitHub {
+		owner = "Rolv-Apneseth";
+		repo = "starship.yazi";
+		rev = "d1cd0a38aa6a2c2e86e62a466f43e415f781031e";
+		sha256 = "sha256-XiEsykudwYmwSNDO41b5layP1DqVa89e6Emv9Qf0mz0=";
+	};
 in {
 	programs.yazi = {
 		enable = true;
@@ -36,12 +42,7 @@ in {
 			chmod = "${yazi-plugins}/chmod.yazi";
 			full-border = "${yazi-plugins}/full-border.yazi";
 			max-preview = "${yazi-plugins}/max-preview.yazi";
-			starship = pkgs.fetchFromGitHub {
-				owner = "Rolv-Apneseth";
-				repo = "starship.yazi";
-				rev = "77a65f5a367f833ad5e6687261494044006de9c3";
-				sha256 = "sha256-sAB0958lLNqqwkpucRsUqLHFV/PJYoJL2lHFtfHDZF8=";
-			};
+			starship = starship;
 		};
 
 		initLua = ''
@@ -60,6 +61,10 @@ in {
 					on = ["c" "m"];
 					run = "plugin chmod";
 					desc = "Chmod on selected files";
+				}
+				{
+					on = [ "<C-n>" ];
+					run = ''shell '${lib.getExe pkgs.xdragon} -x -i -T "$@"' --confirm'';
 				}
 			];
 		};

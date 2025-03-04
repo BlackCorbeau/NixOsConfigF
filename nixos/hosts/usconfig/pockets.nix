@@ -14,8 +14,10 @@
     wget
     home-manager
     pkgs.opera
+
+    #git
     pkgs.git
-    
+    lazygit
     #terminals
     kitty
     alacritty
@@ -24,38 +26,20 @@
     pkgs.google-chrome
     pkgs.yazi
     pkgs.libsForQt5.kolourpaint
-    nerdfonts
     pkgs.waybar
     grimblast
     tree
     slurp
-    brightnessctl
     neofetch
     mako
     file
     btop
     nix-index
     unzip
-    scrot
-    ffmpeg
     light
-    zram-generator
     zip
-    ntfs3g
-    yt-dlp
     brightnessctl
     openssl
-    httpie
-    ncdu
-    hexyl
-    jq
-    tldr
-    bat
-    xdg-utils
-    helix
-    playerctl
-    duf
-    v2raya
 
     swww
     gnumake
@@ -64,16 +48,25 @@
     (python3.withPackages (ps: with ps; [ requests bpython ]))
     python311Packages.pip
 
+    #text editor
+    helix
+
     # IDES
     jetbrains.idea-community
 
-    # Languages
+    # Code
     vscode
     nodejs
     gcc
     cmake
-    jdk
+
+    #java
+    openjfx
+    openjdk
     maven
+
+    #DB
+    postgresql
 
     # Bluetooth
     bluez
@@ -93,6 +86,9 @@
     #learning
     zoom-us
     obsidian
+
+    #Usb mouting and acsess
+    udisks
   ];
 
   fonts.packages = with pkgs; [
