@@ -3,6 +3,8 @@
          ./zsh.nix
          ./data/pkgs.nix
        ];
+
+       home.file.".icons/default".source = "${pkgs.vanilla-dmz}/share/icons/Vanilla-DMZ";
  
        home = {
               username = "kirill";

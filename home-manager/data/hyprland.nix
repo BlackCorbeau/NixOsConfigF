@@ -75,10 +75,6 @@
           new_optimizations = true;
         };
 
-        drop_shadow = true;
-        shadow_range = 4;
-        shadow_render_power = 3;
-        "col.shadow" = "rgba(1a1a1aee)";
       };
 
       animations = {
@@ -134,7 +130,6 @@
           "systemctl --user start plasma-polkit-agent"
           "swww init"
           "python3 ${lib.getExe wallpaper_changer}"
-          "waybar"
           "${lib.getExe' pkgs.udiskie "udiskie"}"
           "wl-paste --type text --watch cliphist store"
           "wl-paste --type image --watch cliphist store"

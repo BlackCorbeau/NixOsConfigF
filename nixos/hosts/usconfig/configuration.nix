@@ -11,6 +11,7 @@
       ./models/bluetooth.nix
       ./models/gamemode.nix
       ./models/postgresql.nix
+      ./models/env.nix
     ];
 
   #home.packages = [ pkgs.callPackage ./pockets/thingsboard.nix {} ];
@@ -18,6 +19,8 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+
+  services.upower.enable = true;
 
   networking.hostName = "usconfig"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -57,7 +60,7 @@
   services.printing.enable = true;
 
   # Enable sound with pipewire.
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;

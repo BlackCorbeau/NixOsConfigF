@@ -12,6 +12,12 @@
     image = pkgs.fetchurl {
       url = "https://99px.ru/sstorage/53/2024/03/mid_357241_413672.jpg";
       sha256 = "sha256-evP7zstPa0ztNs/dUJ8G5p+/L2maIKZASeuONJ1C0h0=";
+    };
+
+    iconTheme = {
+      enable = true;
+      package = pkgs.pop-icon-theme;
+      dark = "Pop-Dark";
     }; 
 
     fonts = {

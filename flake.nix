@@ -4,7 +4,8 @@
   inputs = {
 
     ayugram-desktop.url = "github:/ayugram-port/ayugram-desktop/release?submodules=1";
-
+    ags.url = "github:Aylur/ags";
+    
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.05";
     sops-nix.url = "github:Mic92/sops-nix";

@@ -5,6 +5,8 @@ home.packages = [ pkgs.pulsemixer ];
     "float, ^(nmtui)"
   ];
 
+ wayland.windowManager.hyprland.settings.exec-once = [ "waybar" ];
+
   programs.waybar =
   let
     colors = config.lib.stylix.colors;

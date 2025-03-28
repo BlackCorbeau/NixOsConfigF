@@ -1,9 +1,9 @@
-{ pkgs, lib, ... }: 
-let yazi-plugins = pkgs.fetchFromGitHub {
+{ pkgs, lib, ... }: let
+	yazi-plugins = pkgs.fetchFromGitHub {
 		owner = "yazi-rs";
 		repo = "plugins";
-		rev = "c5785059611624e20a37ba573620f30acc28a26a";
-		hash = "sha256-wlSBtabIsEUJhuHmXwgpSnwZp9WaVQFBg6s1XXjubrE=";
+		rev = "07258518f3bffe28d87977bc3e8a88e4b825291b";
+		hash = "sha256-axoMrOl0pdlyRgckFi4DiS+yBKAIHDhVeZQJINh8+wk=";
 	};
 	starship = pkgs.fetchFromGitHub {
 		owner = "Rolv-Apneseth";
@@ -22,19 +22,8 @@ in {
 				show_hidden = true;
 			};
 			preview = {
-			    image_filter = "lanczos3";
-                            image_quality = 90;
-                            tab_size = 1;
-                            max_width = 600;
-                            max_height = 900;
-                            cache_dir = "";
-                            ueberzug_scale = 1;
-                            ueberzug_offset = [
-                                0
-                                0
-                                0
-                                0
-                            ];	
+				max_width = 1000;
+				max_height = 1000;
 			};
 		};
 

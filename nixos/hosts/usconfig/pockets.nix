@@ -21,10 +21,13 @@
     #terminals
     kitty
     alacritty
-    
+
+    #fprAGS
+
+
+    #basePrograms for work
     pkgs.wofi
     pkgs.google-chrome
-    pkgs.yazi
     pkgs.libsForQt5.kolourpaint
     pkgs.waybar
     grimblast
@@ -40,6 +43,7 @@
     zip
     brightnessctl
     openssl
+    yazi
 
     swww
     gnumake
@@ -57,8 +61,12 @@
     # Code
     vscode
     nodejs
+
+    #C/C++
     gcc
+    gdb
     cmake
+    qtcreator
 
     #java
     openjfx
@@ -67,6 +75,7 @@
 
     #DB
     postgresql
+    dbgate
 
     # Bluetooth
     bluez
@@ -94,13 +103,16 @@
   fonts.packages = with pkgs; [
     jetbrains-mono
     noto-fonts
+    (google-fonts.override{fonts=["Press Start 2P" "Overpass Mono"];})
     noto-fonts-emoji
+    noto-fonts-cjk-sans
     twemoji-color-font
     font-awesome
     powerline-fonts
     powerline-symbols
     ubuntu_font_family
     unifont
-    (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
+    nerd-fonts.symbols-only
+    corefonts
   ];
 }
