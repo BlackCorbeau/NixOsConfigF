@@ -2,13 +2,13 @@
     imports = [
         ./hyprland.nix
         ./ags.nix
-        #./waybar.nix
         ./style.nix
         ./git.nix
         ./mako.nix
         ./yazi.nix
         ./sleepMode.nix
-        ./kitty.nix
+        ./ghostty.nix
         ./home-aps.nix
+        ./zed-idea.nix 
     ];
 }

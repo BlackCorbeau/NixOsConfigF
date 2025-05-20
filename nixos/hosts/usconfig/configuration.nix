@@ -14,7 +14,8 @@
       ./models/env.nix
     ];
 
-  #home.packages = [ pkgs.callPackage ./pockets/thingsboard.nix {} ];
+
+   #home.packages = [ pkgs.callPackage ./pockets/thingsboard.nix {} ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -126,6 +127,8 @@
   "nix-command"
   "flakes"
   ];
+
+  nix.settings.trusted-users = [ "kirill" ];
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget

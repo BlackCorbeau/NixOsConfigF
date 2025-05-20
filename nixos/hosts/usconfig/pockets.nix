@@ -10,7 +10,8 @@
   };
 
   environment.systemPackages = with pkgs; [
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    texmaker
+    libreoffice
     wget
     home-manager
     pkgs.opera
@@ -19,8 +20,7 @@
     pkgs.git
     lazygit
     #terminals
-    kitty
-    alacritty
+    ghostty
 
     #fprAGS
 
@@ -29,7 +29,6 @@
     pkgs.wofi
     pkgs.google-chrome
     pkgs.libsForQt5.kolourpaint
-    pkgs.waybar
     grimblast
     tree
     slurp
@@ -58,21 +57,20 @@
     # IDES
     jetbrains.idea-community
 
+    #Utiles
+    postman
+
     # Code
-    vscode
+    zed-editor
     nodejs
 
     #C/C++
-    gcc
-    gdb
-    cmake
     qtcreator
 
     #java
-    openjfx
+    gradle
     openjdk
-    maven
-
+    
     #DB
     postgresql
     dbgate
@@ -98,6 +96,9 @@
 
     #Usb mouting and acsess
     udisks
+
+    #virtualization
+    qemu
   ];
 
   fonts.packages = with pkgs; [

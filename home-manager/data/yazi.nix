@@ -2,14 +2,14 @@
 	yazi-plugins = pkgs.fetchFromGitHub {
 		owner = "yazi-rs";
 		repo = "plugins";
-		rev = "07258518f3bffe28d87977bc3e8a88e4b825291b";
-		hash = "sha256-axoMrOl0pdlyRgckFi4DiS+yBKAIHDhVeZQJINh8+wk=";
+		rev = "864a0210d9ba1e8eb925160c2e2a25342031d8d3";
+		hash = "sha256-m3709h7/AHJAtoJ3ebDA40c77D+5dCycpecprjVqj/k=";
 	};
 	starship = pkgs.fetchFromGitHub {
 		owner = "Rolv-Apneseth";
 		repo = "starship.yazi";
-		rev = "d1cd0a38aa6a2c2e86e62a466f43e415f781031e";
-		sha256 = "sha256-XiEsykudwYmwSNDO41b5layP1DqVa89e6Emv9Qf0mz0=";
+		rev = "6fde3b2d9dc9a12c14588eb85cf4964e619842e6";
+		sha256 = "sha256-+CSdghcIl50z0MXmFwbJ0koIkWIksm3XxYvTAwoRlDY=";
 	};
 in {
 	programs.yazi = {
@@ -30,7 +30,7 @@ in {
 		plugins = {
 			chmod = "${yazi-plugins}/chmod.yazi";
 			full-border = "${yazi-plugins}/full-border.yazi";
-			max-preview = "${yazi-plugins}/max-preview.yazi";
+			# max-preview = "${yazi-plugins}/max-preview.yazi";
 			starship = starship;
 		};
 
@@ -54,6 +54,11 @@ in {
 				{
 					on = [ "<C-n>" ];
 					run = ''shell '${lib.getExe pkgs.xdragon} -x -i -T "$@"' --confirm'';
+				}
+				{
+					on = [ "g" "<S-d>" ];
+					run = ''cd /mnt/D'';
+					desc = "Goto D drive";
 				}
 			];
 		};
