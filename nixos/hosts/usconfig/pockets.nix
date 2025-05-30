@@ -15,6 +15,7 @@
     wget
     home-manager
     pkgs.opera
+    bat
 
     #git
     pkgs.git

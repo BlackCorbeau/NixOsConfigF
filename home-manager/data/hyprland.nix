@@ -43,7 +43,6 @@
 
       input = {
         kb_layout = "us,ru";
-        kb_variant = "lang";
         kb_options = "grp:caps_toggle";
 
         follow_mouse = 1;
@@ -119,10 +118,10 @@
       };
 
       windowrule = [
-        "float, ^(imv)$"
-        "float, ^(feh)$"
-        "float, ^(mpv)$"
-        "float, ^(nmtui)$"
+        "float, class:^(imv)$"
+        "float, class:^(feh)$"
+        "float, class:^(mpv)$"
+        "float, class:^(nmtui)$"
         "float, title:^(Список друзей)"
       ];
 

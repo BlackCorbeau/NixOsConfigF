@@ -9,6 +9,7 @@
         ./sleepMode.nix
         ./ghostty.nix
         ./home-aps.nix
-        ./zed-idea.nix 
+        ./zed-idea.nix
+        ./wofi.nix 
     ];
 }

@@ -12,14 +12,12 @@
       ./models/gamemode.nix
       ./models/postgresql.nix
       ./models/env.nix
+      ./bootloader.nix
+      ./grab.nix
     ];
 
 
    #home.packages = [ pkgs.callPackage ./pockets/thingsboard.nix {} ];
-
-  # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
 
   services.upower.enable = true;
 

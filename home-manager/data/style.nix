@@ -6,7 +6,7 @@
       waybar.enable = false;
     };
 
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/tokyo-city-dark.yaml";
     polarity = "dark";
 
     image = pkgs.fetchurl {
@@ -18,7 +18,14 @@
       enable = true;
       package = pkgs.pop-icon-theme;
       dark = "Pop-Dark";
-    }; 
+    };
+
+    cursor = {
+      name = "catppuccin-mocha-dark-cursors";
+      size = 24;
+      package = pkgs.catppuccin-cursors.mochaDark;
+    };
+ 
 
     fonts = {
       monospace = {
@@ -26,7 +33,17 @@
         package = pkgs.jetbrains-mono;
       };
 
-      sizes = {
+    serif = {
+        name = "GabrieLa";
+        package = (pkgs.google-fonts.override { fonts = [ "Gabriela" ]; });
+      };
+
+    emoji = {
+        package = pkgs.noto-fonts-monochrome-emoji;
+        name = "Noto Emoji";
+      };
+
+    sizes = {
         applications = 13;
         desktop = 12;
       };
