@@ -10,7 +10,6 @@
   };
 
   environment.systemPackages = with pkgs; [
-    texmaker
     libreoffice
     wget
     home-manager
@@ -100,6 +99,7 @@
 
     #virtualization
     qemu
+    gparted
   ];
 
   fonts.packages = with pkgs; [
