@@ -13,7 +13,6 @@
     libreoffice
     wget
     home-manager
-    pkgs.opera
     bat
 
     #git
@@ -32,7 +31,7 @@
     grimblast
     tree
     slurp
-    neofetch
+    fastfetch
     mako
     file
     btop

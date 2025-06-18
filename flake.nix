@@ -40,17 +40,19 @@
       system = "x86_64-linux";
     in {
 
-    nixosConfigurations.usconfig = nixpkgs.lib.nixosSystem {
-      specialArgs = {
-        pkgs-stable = import nixpkgs-stable {
-          inherit system;
-          config.allowUnfree = true;
+    nixosConfigurations = {
+      WhiteRaven = nixpkgs.lib.nixosSystem {
+        specialArgs = {
+          pkgs-stable = import nixpkgs-stable {
+            inherit system;
+            config.allowUnfree = true;
+          };
+          inherit inputs system;
         };
-        inherit inputs system;
+        modules = [
+         ./nixos/hosts/WhiteRaven/configuration.nix
+        ];
       };
-      modules = [
-       ./nixos/hosts/usconfig/configuration.nix
-      ];
     };
 
     homeConfigurations.kirill = home-manager.lib.homeManagerConfiguration {

@@ -68,7 +68,7 @@
         cat = "bat";
         cd = "z";
 
-        rebuild = "sudo nixos-rebuild switch --flake ~/.config/f#usconfig";
+        rebuild = "sudo nixos-rebuild switch --flake ~/.config/f#WhiteRaven";
         deleteGenerations = "sudo nix-collect-garbage -d";
         openHome = "vim .config/f/home-manager/home.nix";
         rebuildHome = "home-manager switch --flake ~/.config/f";
