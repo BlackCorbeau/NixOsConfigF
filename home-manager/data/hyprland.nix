@@ -4,6 +4,7 @@
     colors = config.lib.stylix.colors;
     
     wallpaper_changer = pkgs.writers.writePython3Bin "wallpaper_changer" {
+      libraries = [ pkgs.python3Packages.requests ];
       flakeIgnore = [ "E501" "E111" "E701" "E241" "E731" ];
     } /*py*/ '' 
       from random import choice
@@ -127,7 +128,7 @@
 
       exec-once = [
           "systemctl --user start plasma-polkit-agent"
-          "swww init"
+          "swww-daemon"
           "python3 ${lib.getExe wallpaper_changer}"
           "${lib.getExe' pkgs.udiskie "udiskie"}"
           "wl-paste --type text --watch cliphist store"
@@ -222,8 +223,8 @@
 
         # Disable all effects
         "$mainMod Shift, G, exec, ~/.config/hypr/gamemode.sh "
-        # Skreens
-        ''$mainMod SHIFT, S, exec, alacritty -e sh -c "screenshot"''
+        # Screens
+        ''$mainMod Shift, S, exec, grimblast --notify --freeze copy area''
 
         '', F11, exec, ghostty -e sh -c "hyprlock"''
         
