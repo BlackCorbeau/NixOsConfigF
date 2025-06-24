@@ -9,7 +9,7 @@
     permittedInsecurePackages = ["python-2.7.18.8" "electron-25.9.0" "freeimage-unstable-2021-11-01" "obsidian-1.5.12"];
   };
 
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = with pkgs; [    
     libreoffice
     wget
     home-manager

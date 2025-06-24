@@ -106,11 +106,6 @@
     };
   };
 
-  virtualisation.virtualbox.host.enable = true; #Installing virtualBox for IOT lessons
-  users.extraGroups.vboxusers.members = [ "user-with-access-to-virtualbox" ];
-
-  virtualisation.docker.enable = true;
-
   # Enable automatic login for the user.
   services.displayManager.autoLogin.enable = true;
   services.displayManager.autoLogin.user = "kirill";
