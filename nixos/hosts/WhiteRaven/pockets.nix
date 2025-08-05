@@ -15,18 +15,22 @@
     home-manager
     bat
 
+    #VPN
+    openvpn
+
     #git
     pkgs.git
     lazygit
     #terminals
     ghostty
 
-    #fprAGS
-
+    #VideoEditor
+    kdePackages.kdenlive
 
     #basePrograms for work
     pkgs.wofi
     pkgs.google-chrome
+    tor-browser
     pkgs.libsForQt5.kolourpaint
     grimblast
     tree
@@ -54,21 +58,21 @@
     helix
 
     # IDES
-    jetbrains.idea-community
+    #jetbrains.idea-community
 
     #Utiles
     postman
 
     # Code
     zed-editor
-    nodejs
-
-    #C/C++
-    qtcreator
 
     #java
     gradle
     openjdk
+
+    #Kotlin
+    kotlin
+    android-studio
     
     #DB
     postgresql
@@ -82,6 +86,7 @@
     pipewire
     pulseaudio
     pamixer
+    cava
 
     # obs-studio
     obs-studio
@@ -98,7 +103,7 @@
 
     #virtualization
     qemu
-    gparted
+    kdePackages.partitionmanager
   ];
 
   fonts.packages = with pkgs; [
