@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }: let
+	{ pkgs, lib, ... }: let
 	yazi-plugins = pkgs.fetchFromGitHub {
 		owner = "yazi-rs";
 		repo = "plugins";
@@ -18,7 +18,7 @@ in {
 		shellWrapperName = "y";
 
 		settings = {
-			manager = {
+			mgr = {
 				show_hidden = true;
 			};
 			preview = {
@@ -40,7 +40,7 @@ in {
 		'';
 
 		keymap = {
-			manager.prepend_keymap = [
+			mgr.prepend_keymap = [
 				{
 					on = "T";
 					run = "plugin --sync max-preview";
