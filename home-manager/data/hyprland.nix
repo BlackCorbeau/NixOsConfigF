@@ -114,7 +114,6 @@
         animate_manual_resizes = true;
         animate_mouse_windowdragging = true;
         enable_swallow = true;
-        render_ahead_of_time = false;
         disable_hyprland_logo = false;
       };
 
@@ -122,7 +121,6 @@
         "float, class:^(imv)$"
         "float, class:^(feh)$"
         "float, class:^(mpv)$"
-        "float, class:^(nmtui)$"
         "float, title:^(Список друзей)"
       ];
 
