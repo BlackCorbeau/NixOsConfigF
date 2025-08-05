@@ -85,6 +85,9 @@
         screenshot_c = "grimblast copy area";
         loginPostgresql = "sudo -u postgres psql";
         startShell = "nix-shell . --run zsh";
+        VPN = "sudo openvpn --config /home/kirill/VPN/184.22.37.202_udp_1727.ovpn";
+        RPI3Connect = "sudo zerotier-cli join 0cccb752f78e768c";
+        RPI3Disconnect = "sudo zerotier-cli leave 0cccb752f78e768c";
       };
 
       initExtra = ''
