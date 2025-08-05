@@ -21,12 +21,17 @@
   inputs = {
 
     ayugram-desktop.url = "github:/ayugram-port/ayugram-desktop/release?submodules=1";
-    ags.url = "github:Aylur/ags";
+    ags.url = "github:Aylur/ags/3ed9737bdbc8fc7a7c7ceef2165c9109f336bff6";
     
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
     sops-nix.url = "github:Mic92/sops-nix";
     stylix.url = "github:danth/stylix";
+
+    compose2nix = {
+      url = "github:aksiksi/compose2nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     home-manager = {
       url = "github:nix-community/home-manager";
