@@ -14,6 +14,9 @@
       ./models/env.nix
       ./bootloader.nix
       ./grab.nix
+      ./models/Server/zeroTierOne.nix
+      ./models/docker.nix
+      ./flackePkgs.nix
     ];
 
 
@@ -31,6 +34,10 @@
   # Enable networking
   networking.networkmanager.enable = true;
 
+  networking.extraHosts = ''
+       10.10.146.10 it-camp.innoca.local
+   '';
+ 
   # Set your time zone.
   time.timeZone = "Europe/Moscow";
 
@@ -122,6 +129,8 @@
   ];
 
   nix.settings.trusted-users = [ "kirill" ];
+
+  programs.partition-manager.enable = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
