@@ -10,6 +10,8 @@
         ./ghostty.nix
         ./home-aps.nix
         ./zed-idea.nix
-        ./wofi.nix 
+        ./wofi.nix
+        ./tex.nix
+        ./btop.nix
     ];
 }
