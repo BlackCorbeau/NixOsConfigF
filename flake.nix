@@ -52,6 +52,10 @@
             inherit system;
             config.allowUnfree = true;
           };
+          pkgs-unstable = import nixpkgs {
+            inherit system;
+            config.allowUnfree = true;
+          };
           inherit inputs system;
         };
         modules = [

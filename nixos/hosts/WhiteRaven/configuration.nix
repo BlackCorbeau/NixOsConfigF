@@ -14,9 +14,9 @@
       ./models/env.nix
       ./bootloader.nix
       ./grab.nix
-      ./models/Server/zeroTierOne.nix
       ./models/docker.nix
       ./flackePkgs.nix
+      ./models/vpn.nix
     ];
 
 
