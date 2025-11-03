@@ -121,6 +121,7 @@
         "float, class:^(imv)$"
         "float, class:^(feh)$"
         "float, class:^(mpv)$"
+        "float, class:^(nmtui)"
         "float, title:^(Список друзей)"
       ];
 

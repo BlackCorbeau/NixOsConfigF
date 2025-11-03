@@ -86,8 +86,8 @@
         loginPostgresql = "sudo -u postgres psql";
         startShell = "nix-shell . --run zsh";
         VPN = "sudo openvpn --config /home/kirill/VPN/184.22.37.202_udp_1727.ovpn";
-        RPI3Connect = "sudo zerotier-cli join 0cccb752f78e768c";
-        RPI3Disconnect = "sudo zerotier-cli leave 0cccb752f78e768c";
+        play2Go = "ssh -i ~/.ssh/id_rsa_play2go.pub root@93.123.84.45";
+        
       };
 
       initExtra = ''

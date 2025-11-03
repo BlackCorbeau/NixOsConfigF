@@ -53,7 +53,7 @@ in {
 				}
 				{
 					on = [ "<C-n>" ];
-					run = ''shell '${lib.getExe pkgs.xdragon} -x -i -T "$@"' --confirm'';
+					run = ''shell '${lib.getExe pkgs.dragon-drop} -x -i -T "$@"' --confirm'';
 				}
 				{
 					on = [ "g" "<S-d>" ];
