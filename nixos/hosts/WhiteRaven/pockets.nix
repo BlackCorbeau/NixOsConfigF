@@ -6,7 +6,7 @@
 {
   nixpkgs.config = {
     allowUnfree = true;
-    permittedInsecurePackages = ["python-2.7.18.8" "electron-25.9.0" "freeimage-unstable-2021-11-01" "obsidian-1.5.12"];
+    permittedInsecurePackages = ["python-2.7.18.12" "electron-25.9.0" "freeimage-unstable-2021-11-01" "obsidian-1.5.12"];
   };
 
   environment.systemPackages = with pkgs; [    
@@ -31,7 +31,6 @@
     pkgs.wofi
     pkgs.google-chrome
     tor-browser
-    pkgs.libsForQt5.kolourpaint
     grimblast
     tree
     slurp
@@ -50,7 +49,7 @@
     swww
     gnumake
 
-    python
+    python2
     (python3.withPackages (ps: with ps; [ requests bpython ]))
     python311Packages.pip
 
@@ -110,13 +109,13 @@
     jetbrains-mono
     noto-fonts
     (google-fonts.override{fonts=["Press Start 2P" "Overpass Mono"];})
-    noto-fonts-emoji
+    noto-fonts-color-emoji
     noto-fonts-cjk-sans
     twemoji-color-font
     font-awesome
     powerline-fonts
     powerline-symbols
-    ubuntu_font_family
+    ubuntu-classic
     unifont
     nerd-fonts.symbols-only
     corefonts
