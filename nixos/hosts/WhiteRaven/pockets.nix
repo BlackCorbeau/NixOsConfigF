@@ -103,6 +103,10 @@
     #virtualization
     qemu
     kdePackages.partitionmanager
+
+    #Torent
+    #torrential
+    deluge
   ];
 
   fonts.packages = with pkgs; [
