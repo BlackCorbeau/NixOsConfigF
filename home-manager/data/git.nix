@@ -4,7 +4,7 @@
     settings = {
       user = {
         name = "Kirill";
-        email = "kremizov3@gmail.com";
+        email = "remizov.kirill2005@yandex.ru";
       };
     };
   };
