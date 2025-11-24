@@ -15,9 +15,6 @@
     home-manager
     bat
 
-    #VPN
-    openvpn
-
     #git
     pkgs.git
     lazygit
@@ -30,6 +27,7 @@
     #basePrograms for work
     pkgs.wofi
     pkgs.google-chrome
+    vivaldi
     tor-browser
     grimblast
     tree
@@ -64,10 +62,6 @@
 
     # Code
     zed-editor
-
-    #java
-    gradle
-    openjdk
 
     #Kotlin
     kotlin
