@@ -58,22 +58,8 @@
           };
           inherit inputs system;
         };
-        modules = [
-         ./nixos/hosts/WhiteRaven/configuration.nix
-        ];
+        modules = [ ./host/WhiteRaven/configuration.nix ];
       };
-    };
-
-    homeConfigurations.kirill = home-manager.lib.homeManagerConfiguration {
-      extraSpecialArgs = {
-          inherit inputs;
-          };
-      pkgs = nixpkgs.legacyPackages.${system};
-      modules = [
-        ./home-manager/home.nix
-        inputs.sops-nix.homeManagerModules.sops
-        inputs.stylix.homeManagerModules.stylix
-      ];
     };
   };
 }
