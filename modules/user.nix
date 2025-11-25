@@ -1,6 +1,5 @@
 {config, pkgs, ...}: {
     imports = [
-        ./user/hyprland.nix
         ./user/ags.nix
         ./user/mako.nix
         ./user/yazi.nix
