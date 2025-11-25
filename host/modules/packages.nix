@@ -20,13 +20,14 @@
   fonts.packages = with pkgs; [
     jetbrains-mono
     noto-fonts
-    noto-fonts-emoji
+    (google-fonts.override{fonts=["Press Start 2P" "Overpass Mono"];})
+    noto-fonts-color-emoji
     noto-fonts-cjk-sans
     twemoji-color-font
     font-awesome
     powerline-fonts
     powerline-symbols
-    ubuntu_font_family
+    ubuntu-classic
     unifont
     nerd-fonts.symbols-only
     corefonts

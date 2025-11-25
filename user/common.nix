@@ -21,10 +21,10 @@
             stateVersion = "23.11";
           };
         };
-        #extraSpecialArgs = {
-        #  inherit inputs;
-        #  inherit pkgs-stable;
-        #};
+        extraSpecialArgs = {
+          inherit inputs;
+          inherit pkgs-stable;
+        };
       };
     }
   ];
