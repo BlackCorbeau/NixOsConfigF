@@ -5,7 +5,6 @@
       inherit pkgs;
       inherit config;
       inherit inputs;
-      folder = "${config.home.homeDirectory}/wallpapers";
       swww_flags = "--transition-type center";
     }
   )];

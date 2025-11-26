@@ -1,4 +1,4 @@
-{ pkgs, lib, config, folder, swww_flags, inputs }: {
+{ pkgs, lib, config, swww_flags, inputs }: {
   home.packages = with pkgs; [
     ghostty
     pamixer
@@ -20,6 +20,7 @@
       from random import choice
       from os import system, listdir
 
+      folder = "${config.home.homeDirectory}/wallpapers"
       filename = choice(listdir(folder))
       system(f"${lib.getExe pkgs.swww} img {folder}/{filename} ${swww_flags}")
     '';
