@@ -1,6 +1,8 @@
-{ config, ... }: {
+{ config, pkgs, ... }: {
+  home.packages = [ pkgs.nh ];
   programs = {
-  zoxide.enable = true;
+    zoxide.enable = true;
+    fzf.enable = true;
 
   starship = {
       enable = true;
@@ -53,11 +55,11 @@
         let
           flakeDir = "~/nix";
         in {
-        rb = "sudo nixos-rebuild switch --flake ${flakeDir}";
+        rb = "nh os switch ${flakeDir}";
         upd = "nix flake update ${flakeDir}";
         upg = "sudo nixos-rebuild switch --upgrade --flake ${flakeDir}";
 
-        hms = "home-manager switch --flake ${flakeDir}";
+        hms = "nh home switch ${flakeDir}";
 
         conf = "$EDITOR ${flakeDir}/nixos/hosts/$(hostname)/configuration.nix";
         pkgs = "$EDITOR ${flakeDir}/nixos/packages.nix";
@@ -65,8 +67,9 @@
         ll = "ls -l";
         se = "sudoedit";
         ff = "fastfetch";
-        cat = "bat";
+        cat = "${pkgs.lib.getExe pkgs.bat}";
         cd = "z";
+        lg = "lazygit";
 
         rebuild = "sudo nixos-rebuild switch --flake ~/.config/f#WhiteRaven";
         deleteGenerations = "sudo nix-collect-garbage -d";
@@ -90,11 +93,15 @@
         
       };
 
-      initExtra = ''
-        if [ -z "''${WAYLAND_DISPLAY}" ] && [ "''${XDG_VTNR}" -eq 1 ]; then
-          dbus-run-session Hyprland
-        fi
+      initContent = ''
         eval "$(zoxide init zsh)"
+        eval "$(nh completions zsh)"
+        source "$(fzf-share)/key-bindings.zsh"
+        source "$(fzf-share)/completion.zsh"
+      '';
+
+      envExtra = ''
+        TERM=xterm-256color
       '';
 
       history.size = 10000;

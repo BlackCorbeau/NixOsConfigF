@@ -30,25 +30,26 @@
     
     package = inputs.hyprland.packages.${pkgs.system}.hyprland;
     plugins = with inputs.hyprland-plugins.packages.${pkgs.system}; [
-      hyprbars
+      # hyprbars  # Version mismatch
     ];
 
     settings = {
       "$mainMod" = "SUPER";
 
-      env = [
-        "LIBVA_DRIVER_NAME,nvidia"
-        "__GLX_VENDOR_LIBRARY_NAME,nvidia"
-        "GBM_BACKEND,nvidia"
+      ecosystem = {
+        no_donation_nag = true;
+        no_update_news = true;
+      };
 
+      env = [
         "XDG_SESSION_TYPE,wayland"
         "QT_QPA_PLATFORM,wayland"
 
         "XDG_CURRENT_DESKTOP,Hyprland"
         "XDG_SESSION_DESKTOP,Hyprland"
 
-        "WLR_NO_HARDWARE_CURSORS,1"
-        "XCURSOR_SIZE,36"
+        "XCURSOR_SIZE, ${toString config.stylix.cursor.size}"
+        "XCURSOR_THEME, ${config.stylix.cursor.name}"
 
         "XDG_SCREENSHOTS_DIR,~/screens"
       ];
@@ -60,10 +61,14 @@
         enable_stdout_logs = true;
       };
 
+      misc = {
+        focus_on_activate = true;
+      };
+
       input = {
         kb_layout = "us,ru";
-        kb_variant = "lang";
         kb_options = "grp:caps_toggle";
+        numlock_by_default = true;
 
         follow_mouse = 1;
 
@@ -71,21 +76,29 @@
           natural_scroll = false;
         };
 
-        sensitivity = 0; # -1.0 - 1.0, 0 means no modification.
+        sensitivity = 0;
       };
 
-      windowrule = [
-        "float, ^(imv)$"
-        "float, ^(feh)$"
-        "float, ^(mpv)$"
-        "float, ^(nmtui)$"
-        "float, title:^(Список друзей)"
-        "move onscreen cursor -50% -50%, ^(xdragon)$"
+      gestures = {
+        workspace_swipe_invert = true;
+        workspace_swipe_distance = 200;
+        workspace_swipe_forever = true;
+      };
+
+      gesture = [
+        "3, horizontal, workspace"
       ];
 
-      windowrulev2 = [
-        "float, class:(clipse)"
-        "size 622 652, class:(clipse)"
+      windowrule = [
+        "float, class:^(imv)$"
+        "float, class:^(feh)$"
+        "float, class:^(mpv)$"
+        "float, title:^(Список друзей)"
+        "move onscreen cursor -50% -50%, class:^(xdragon)$"
+        "float, title:(nmtui)"
+        "float, title:(pulsemixer)"
+        "float, title:(clipse)"
+        "size 622 652, title:(clipse)"
       ];
 
       exec-once = [
@@ -98,12 +111,12 @@
       ];
 
       bind = [
-        "$mainMod, V, exec, kitty --class clipse -e clipse"
+        "$mainMod, V, exec, ghostty --title=clipse -e clipse"
 
-        "$mainMod, Return, exec, kitty"
+        "$mainMod, Return, exec, ghostty"
         "$mainMod, Q, killactive,"
         "$mainMod, M, exit,"
-        "$mainMod, E, exec, kitty -e sh -c yazi"
+        "$mainMod, E, exec, ghostty -e sh -c yazi"
         "$mainMod, F, togglefloating,"
         "$mainMod, D, exec, wofi --show drun"
         "$mainMod, P, pseudo, # dwindle"
@@ -158,24 +171,39 @@
         "$mainMod, mouse_up, workspace, e-1"
 
         # Keyboard backlight
-        "$mainMod, F3, exec, brightnessctl -d *::kbd_backlight set +33%"
-        "$mainMod, F2, exec, brightnessctl -d *::kbd_backlight set 33%-"
+        "$mainMod, F3, exec, ${lib.getExe pkgs.brightnessctl} -d *::kbd_backlight set +33%"
+        "$mainMod, F2, exec, ${lib.getExe pkgs.brightnessctl} -d *::kbd_backlight set 33%-"
 
         # Volume and Media Control
-        ", XF86AudioRaiseVolume, exec, pamixer -i 5 "
-        ", XF86AudioLowerVolume, exec, pamixer -d 5 "
         ", XF86AudioMute, exec, pamixer -t"
         ", XF86AudioMicMute, exec, pamixer --default-source -m"
+        ", XF86AudioPlay, exec, ${lib.getExe pkgs.playerctl} play-pause"
+        ", XF86AudioPrev, exec, ${lib.getExe pkgs.playerctl} position 5-"
+        ", XF86AudioNext, exec, ${lib.getExe pkgs.playerctl} position 5+"
+
+        ", XF86Explorer, exec, ghostty -e sh -c yazi"
+        ", XF86Mail, exec, thunderbird"
+        ", XF86WWW, exec, google-chrome-stable"  # TODO: Replace hard-code to some variable
         
         # Brightness control
-        ", XF86MonBrightnessDown, exec, brightnessctl set 5%- "
-        ", XF86MonBrightnessUp, exec, brightnessctl set +5% "
+        ", XF86MonBrightnessDown, exec, ${lib.getExe pkgs.brightnessctl} set 5%- "
+        ", XF86MonBrightnessUp,   exec, ${lib.getExe pkgs.brightnessctl} set +5% "
 
         # Waybar
         "$mainMod, B, exec, pkill -SIGUSR1 waybar"
         #"$mainMod, W, exec, pkill -SIGUSR2 waybar"
 
         "$mainMod, W, exec, ${lib.getExe wallpaper_changer}"
+      ];
+
+      binde = [
+        ", XF86AudioRaiseVolume, exec, pamixer -i 5 "
+        ", XF86AudioLowerVolume, exec, pamixer -d 5 "
+      ];
+
+      bindo = [
+        ", XF86AudioPrev, exec, ${lib.getExe pkgs.playerctl} previous"
+        ", XF86AudioNext, exec, ${lib.getExe pkgs.playerctl} next"
       ];
 
       # Move/resize windows with mainMod + LMB/RMB and dragging

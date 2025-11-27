@@ -13,19 +13,14 @@
     colors = config.lib.stylix.colors;
   in {
     settings = {
-      monitor = [
-        "DP-3, 3440x1440@165.00Hz, auto-right, 1"
-        # "HDMI-A-1, 3840x2160@60.00Hz, auto-left, 2"
-        "HDMI-A-1, disabled"
-        ",preferred,auto,1"
-      ];
+      monitor = ",preferred,auto,1";
 
       general = {
         gaps_in = 5;
-        gaps_out = 20;
+        gaps_out = 10;
         border_size = 3;
-        "col.active_border" = "rgba(${colors.base0C}ee) rgba(${colors.base0B}ee) 45deg";
-        "col.inactive_border" = "rgba(${colors.base05}aa)";
+        "col.active_border" = lib.mkForce "rgba(${colors.base0C}ee) rgba(${colors.base0B}ee) 45deg";
+        "col.inactive_border" = lib.mkForce "rgba(${colors.base05}aa)";
 
         layout = "dwindle";
       };
@@ -44,7 +39,6 @@
           enabled = true;
           range = 4;
           render_power = 3;
-          color = "rgba(1a1a1aee)";
         };
       };
 
@@ -70,26 +64,15 @@
 
       master.new_status = "master";
 
-      gestures = {
-        workspace_swipe = true;
-        workspace_swipe_fingers = 3;
-        workspace_swipe_invert = true;
-        workspace_swipe_distance = 200;
-        workspace_swipe_forever = true;
-      };
-
       misc = {
         animate_manual_resizes = true;
         animate_mouse_windowdragging = true;
         enable_swallow = true;
-        render_ahead_of_time = false;
-        disable_hyprland_logo = false;
       };
 
       bind = [
-        "    , Print, exec, grimblast --notify --freeze copy output"
-        "CTRL, Print, exec, grimblast --notify --freeze copy area"
-        "ALT , Print, exec, grimblast --notify --freeze copy active"
+        ''$mainMod Shift, S, exec, grimblast --notify --freeze copy area''
+        '', F11, exec, ghostty -e sh -c "hyprlock"''
       ];
     };
   };
