@@ -71,8 +71,8 @@
       };
 
       bind = [
-        ''$mainMod Shift, S, exec, grimblast --notify --freeze copy area''
-        '', F11, exec, ghostty -e sh -c "hyprlock"''
+        "$mainMod Shift, S, exec, ${lib.getExe pkgs.grimblast} --notify --freeze copy area"
+        ", F11, exec, ghostty -e sh -c hyprlock"
       ];
     };
   };
