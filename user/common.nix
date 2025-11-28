@@ -1,4 +1,4 @@
-{ pkgs, pkgs-stable, lib, inputs, name, fullname ? name, ... }: {
+{config, pkgs, pkgs-unstable, pkgs-fixed, lib, inputs, name, fullname ? name, ... }: {
   imports = [
     inputs.home-manager.nixosModules.home-manager {
       home-manager = {
@@ -25,7 +25,12 @@
         };
         extraSpecialArgs = {
           inherit inputs;
-          inherit pkgs-stable;
+          pkgs-stable = pkgs;
+          inherit pkgs-fixed;
+          host = {
+            name = config.networking.hostName;
+          };
+          username = name;
         };
       };
     }

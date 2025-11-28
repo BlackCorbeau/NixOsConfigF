@@ -22,18 +22,14 @@
 
     ayugram-desktop.url = "github:/ayugram-port/ayugram-desktop/release?submodules=1";
     ags.url = "github:Aylur/ags/3ed9737bdbc8fc7a7c7ceef2165c9109f336bff6";
-    
+
+    nixpkgs-fixed.url = "github:nixos/nixpkgs/ce01daebf8489ba97bd1609d185ea276efdeb121";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
     sops-nix.url = "github:Mic92/sops-nix";
     stylix.url = "github:danth/stylix";
 
-    compose2nix = {
-      url = "github:aksiksi/compose2nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    hyprland.url = "github:hyprwm/Hyprland";
+    hyprland.url = "github:hyprwm/Hyprland/v0.52.1-b";
     hyprland-plugins = {
       url = "github:hyprwm/hyprland-plugins";
       inputs.hyprland.follows = "hyprland";
@@ -45,7 +41,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-stable, home-manager, ... }@inputs:
+  outputs = { self, nixpkgs, nixpkgs-stable, nixpkgs-fixed, home-manager, ... }@inputs:
 
     let
       system = "x86_64-linux";
@@ -54,11 +50,11 @@
     nixosConfigurations = {
       WhiteRaven = nixpkgs.lib.nixosSystem {
         specialArgs = {
-          pkgs-stable = import nixpkgs-stable {
+          pkgs-unstable = import nixpkgs {
             inherit system;
             config.allowUnfree = true;
           };
-          pkgs-unstable = import nixpkgs {
+          pkgs-fixed = import nixpkgs-fixed {
             inherit system;
             config.allowUnfree = true;
           };

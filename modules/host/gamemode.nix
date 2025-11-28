@@ -8,6 +8,7 @@
     protonup-ng
     bottles
     heroic
+    vesktop
   ];
 
   environment.sessionVariables = {

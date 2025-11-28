@@ -3,7 +3,6 @@
     ./host/bluetooth.nix
     ./host/bootloader.nix
     ./host/env.nix
-    ./host/gamemode.nix
     ./host/sound.nix
     ./host/vpn.nix
     ./host/postgresql.nix
