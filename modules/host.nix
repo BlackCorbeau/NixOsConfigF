@@ -12,6 +12,7 @@
   services = {
     udisks2.enable = true;
     fstrim.enable = true;
+    upower.enable = true;
   };
   networking.networkmanager.enable = true;
 }
