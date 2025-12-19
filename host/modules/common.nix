@@ -6,10 +6,6 @@
     ./packages.nix
   ];
 
-  options = {
-    host.laptop = lib.mkEnableOption "laptop mode";
-  };
-
   config = {
     networking.hostName = hostname;
     time.timeZone = lib.mkDefault "Europe/Moscow";
