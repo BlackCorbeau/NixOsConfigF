@@ -48,12 +48,12 @@
     zsh = {
       enable = true;
       enableCompletion = true;
-      # enableAutosuggestions = true;
+      autosuggestion.enable = true;
       syntaxHighlighting.enable = true;
 
       shellAliases =
         let
-          flakeDir = "~/f";
+          flakeDir = "~/.config/f";
         in {
         rb = "nh os switch ${flakeDir}";
         upd = "nix flake update ${flakeDir}";
