@@ -6,7 +6,7 @@
         ./user/sleepMode.nix
         ./user/ghostty.nix
         ./user/zed-idea.nix
-        ./user/wofi.nix
+        ./user/fazzel.nix
         ./user/btop.nix
         ./user/zsh.nix
         ./user/packages/tex.nix
