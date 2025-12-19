@@ -5,11 +5,12 @@
         useGlobalPkgs = true;
         useUserPackages = true;
         backupFileExtension = "rebuild";
+        overwriteBackup = true;
         
         users.${name} = {
           imports = [
             inputs.sops-nix.homeManagerModules.sops
-            inputs.stylix.homeManagerModules.stylix
+            inputs.stylix.homeModules.stylix
             ../modules/user.nix
             ./${name}/modules/git.nix
             ./${name}/modules/hyprland.nix
