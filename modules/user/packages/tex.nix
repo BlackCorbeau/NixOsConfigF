@@ -26,7 +26,7 @@
         varwidth
         paracol
         anyfontsize
-        scheme-basic;
+        scheme-full;
     })
   ];
 }
