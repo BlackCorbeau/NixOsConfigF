@@ -50,7 +50,7 @@
   };
 
   services.greetd = let
-    tuigreet = lib.getExe pkgs.greetd.tuigreet;
+    tuigreet = lib.getExe pkgs.tuigreet;
     session = lib.getExe inputs.hyprland.packages.${pkgs.system}.default;
   in {
     enable = true;
