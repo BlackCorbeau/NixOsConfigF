@@ -12,5 +12,6 @@
         ./user/packages/tex.nix
         ./user/packages/utils.nix
         ./user/packages/desktop.nix
+        ./user/packages/kdenlive.nix
     ];
 }
