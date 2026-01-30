@@ -4,6 +4,7 @@
     targets = {
       hyprland.enable = false;
       waybar.enable = false;
+      gnome-text-editor.enable = false;
     };
 
     base16Scheme = "${pkgs.base16-schemes}/share/themes/tokyo-city-dark.yaml";
