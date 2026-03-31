@@ -1,4 +1,4 @@
-{ pkgs, pkgs-unstable, config, ...}: {
+{ pkgs, pkgs-unstable, config, inputs, ...}: {
   systemd.services.v2raya = {
     enable = true;
     description = "v2rayA gui client";

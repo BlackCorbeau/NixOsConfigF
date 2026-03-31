@@ -90,15 +90,19 @@
       ];
 
       windowrule = [
-        "float, class:^(imv)$"
-        "float, class:^(feh)$"
-        "float, class:^(mpv)$"
-        "float, title:^(Список друзей)"
-        "move onscreen cursor -50% -50%, class:^(xdragon)$"
-        "float, title:(nmtui)"
-        "float, title:(pulsemixer)"
-        "float, title:(clipse)"
-        "size 622 652, title:(clipse)"
+        "match:class imv,           float 1"
+        "match:class feh,           float 1"
+        "match:class mpv,           float 1"
+
+        "match:title Список друзей, float 1"
+        "match:title nmtui,         float 1"
+        "match:title pulsemixer,    float 1"
+
+        "match:title clipse,        float 1"
+        "match:title clipse,   size 622 652"
+
+        "match:focus 1, rounding 0"
+        "match:float 0, match:workspace w[t1], border_size 0"
       ];
 
       exec-once = [
@@ -120,7 +124,7 @@
         "$mainMod, F, togglefloating,"
         "$mainMod, D, exec, fuzzel"
         "$mainMod, P, pseudo, # dwindle"
-        "$mainMod, J, togglesplit, # dwindle"
+        "$mainMod, J, layoutmsg, togglesplit, # dwindle"
 
         # Move focus with mainMod + arrow keys
         "$mainMod, left,  movefocus, l"

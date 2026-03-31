@@ -109,6 +109,8 @@
     deluge
   ];
 
+
+  enableDefaultPackages = false;   
   fonts.packages = with pkgs; [
     jetbrains-mono
     noto-fonts
