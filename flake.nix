@@ -32,7 +32,7 @@
     stylix.url = "github:danth/stylix";
     yazi.url = "github:sxyazi/yazi";
 
-    hyprland.url = "github:hyprwm/Hyprland/v0.52.1-b";
+    hyprland.url = "github:hyprwm/Hyprland/v0.54.2-b";
     hyprland-plugins = {
       url = "github:hyprwm/hyprland-plugins";
       inputs.hyprland.follows = "hyprland";
@@ -41,6 +41,11 @@
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    russia-blocked-geoip = {
+      url = "github:runetfreedom/russia-blocked-geoip/release";
+      flake = false;
     };
   };
 
