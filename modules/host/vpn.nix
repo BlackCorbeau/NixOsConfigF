@@ -17,10 +17,6 @@
   };
 
   environment.etc = {
-    "v2raya/ru_geoip.dat".source = pkgs.fetchurl {
-      name = "geoip.dat";
-      url = "https://github.com/runetfreedom/russia-blocked-geoip/releases/download/202509251525/geoip.dat";
-      hash = "sha256-bhz32BOLoqq8yYe8tXWQRkqUiDMa4jAuhLjDfcyF9d4=";
-    };
+    "v2raya/ru_geoip.dat".source = "${inputs.russia-blocked-geoip}/geoip.dat";
   };
 }
