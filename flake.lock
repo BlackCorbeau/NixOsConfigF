@@ -377,11 +377,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1775143651,
-        "narHash": "sha256-S0RqAyDPMTcv9vASMaE8eY1QexFysAOdnxUxFHIPOyE=",
+        "lastModified": 1775223910,
+        "narHash": "sha256-QRdehpSKTttlZe0oY2n5OCfZeCMrHkKNlWF1LJzO9tY=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "d166a078541982a76f14d3e06e9665fa5c9ed85e",
+        "rev": "f68887a4c11e662b0eb0323d34b3fb9506226719",
         "type": "github"
       },
       "original": {
@@ -756,22 +756,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-fixed": {
-      "locked": {
-        "lastModified": 1754292888,
-        "narHash": "sha256-1ziydHSiDuSnaiPzCQh1mRFBsM2d2yRX9I+5OPGEmIE=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "ce01daebf8489ba97bd1609d185ea276efdeb121",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "ce01daebf8489ba97bd1609d185ea276efdeb121",
-        "type": "github"
-      }
-    },
     "nixpkgs-lib": {
       "locked": {
         "lastModified": 1772328832,
@@ -784,6 +768,22 @@
       "original": {
         "owner": "nix-community",
         "repo": "nixpkgs.lib",
+        "type": "github"
+      }
+    },
+    "nixpkgs-pinned": {
+      "locked": {
+        "lastModified": 1764517877,
+        "narHash": "sha256-pp3uT4hHijIC8JUK5MEqeAWmParJrgBVzHLNfJDZxg4=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "2d293cbfa5a793b4c50d17c05ef9e385b90edf6c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "2d293cbfa5a793b4c50d17c05ef9e385b90edf6c",
         "type": "github"
       }
     },
@@ -955,7 +955,7 @@
         "hyprland": "hyprland",
         "hyprland-plugins": "hyprland-plugins",
         "nixpkgs": "nixpkgs_4",
-        "nixpkgs-fixed": "nixpkgs-fixed",
+        "nixpkgs-pinned": "nixpkgs-pinned",
         "nixpkgs-stable": "nixpkgs-stable",
         "russia-blocked-geoip": "russia-blocked-geoip",
         "sops-nix": "sops-nix",
@@ -966,11 +966,11 @@
     "russia-blocked-geoip": {
       "flake": false,
       "locked": {
-        "lastModified": 1775193077,
-        "narHash": "sha256-W6W25d2W6i6EToJBZa/VauTI81T29AjnBDp/IT/C/WA=",
+        "lastModified": 1775231077,
+        "narHash": "sha256-yNnyYAntGSexytpx6OMIzFSi2kiHGNVSKXcTKmenS1M=",
         "owner": "runetfreedom",
         "repo": "russia-blocked-geoip",
-        "rev": "b2d810685eb9de67c66aa726a815b8815d5d055c",
+        "rev": "cff6b3c1d46a80005aa773fdf27f60237a0b872d",
         "type": "github"
       },
       "original": {
@@ -1225,11 +1225,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1775178832,
-        "narHash": "sha256-BVim/Z408fJNyWia52Wcui+f3ri6FpT0WEbUFbjhH/A=",
+        "lastModified": 1775220334,
+        "narHash": "sha256-IOF5iEoYyx9rMGh5lGH53yaHkaqEFX7P0VPSXzsXDmM=",
         "owner": "sxyazi",
         "repo": "yazi",
-        "rev": "ad655eda52840c8ee4ea3c39ee3506ace3dad93f",
+        "rev": "0cedbd9c7bbc44b23d54306b3effa3fa68eacdd8",
         "type": "github"
       },
       "original": {
