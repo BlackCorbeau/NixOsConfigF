@@ -58,7 +58,10 @@
         pkgs-stable = import nixpkgs-stable { inherit system config; };
         pkgs-pinned = import nixpkgs-pinned { inherit system config; };
       };
-      modules = [ ./host/${hostname}/configuration.nix ];
+      modules = [
+        ./host/${hostname}/configuration.nix
+        { nixpkgs.config = config; }
+      ];
     };
   in {
     nixosConfigurations = {
