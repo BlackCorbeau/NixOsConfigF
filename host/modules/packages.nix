@@ -1,12 +1,6 @@
 { pkgs, inputs, ... }: {
   nixpkgs.config.allowUnfree = true;
 
-  nixpkgs.overlays = [
-    (final: prev: {
-      xrdb = prev.xorg.xrdb;
-    })
-  ];
-
   environment.systemPackages = with pkgs; [
     file
     tree
