@@ -22,7 +22,7 @@
 
       folder = "${config.home.homeDirectory}/wallpapers"
       filename = choice(listdir(folder))
-      system(f"${lib.getExe pkgs.swww} img {folder}/{filename} ${swww_flags}")
+      system(f"${lib.getExe pkgs.awww} img {folder}/{filename} ${swww_flags}")
     '';
   in {
     enable = true;
@@ -107,7 +107,7 @@
 
       exec-once = [
         "systemctl --user start plasma-polkit-agent"
-        "${lib.getExe' pkgs.swww "swww-daemon"}"
+        "${lib.getExe' pkgs.awww "awww-daemon"}"
         "${lib.getExe wallpaper_changer}"
         "wl-clip-persist --clipboard both"
         "clipse -listen"
