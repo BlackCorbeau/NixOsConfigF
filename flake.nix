@@ -25,7 +25,7 @@
     ayugram-desktop.url = "github:/ayugram-port/ayugram-desktop/release?submodules=1";
     ags.url = "github:Aylur/ags/3ed9737bdbc8fc7a7c7ceef2165c9109f336bff6";
 
-    nixpkgs-fixed.url = "github:nixos/nixpkgs/ce01daebf8489ba97bd1609d185ea276efdeb121";
+    nixpkgs-pinned.url = "github:nixos/nixpkgs/2d293cbfa5a793b4c50d17c05ef9e385b90edf6c";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11";
     sops-nix.url = "github:Mic92/sops-nix";
@@ -48,28 +48,21 @@
       flake = false;
     };
   };
-
-  outputs = { self, nixpkgs, nixpkgs-stable, nixpkgs-fixed, home-manager, ... }@inputs:
-
-    let
-      system = "x86_64-linux";
-    in {
-
-    nixosConfigurations = {
-      WhiteRaven = nixpkgs-stable.lib.nixosSystem {
-        specialArgs = {
-          pkgs-unstable = import nixpkgs {
-            inherit system;
-            config.allowUnfree = true;
-          };
-          pkgs-fixed = import nixpkgs-fixed {
-            inherit system;
-            config.allowUnfree = true;
-          };
-          inherit inputs system;
-        };
-        modules = [ ./host/WhiteRaven/configuration.nix ];
+  
+  outputs = { self, nixpkgs, nixpkgs-stable, nixpkgs-pinned, home-manager, ... }@inputs: let
+    system = "x86_64-linux";
+    config = { allowUnfree = true; };
+    mkHost = hostname: nixpkgs.lib.nixosSystem {
+      specialArgs = {
+        inherit inputs;
+        pkgs-stable = import nixpkgs-stable { inherit system config; };
+        pkgs-pinned = import nixpkgs-pinned { inherit system config; };
       };
+      modules = [ ./host/${hostname}/configuration.nix ];
+    };
+  in {
+    nixosConfigurations = {
+      WhiteRaven = mkHost "WhiteRaven";
     };
   };
 }

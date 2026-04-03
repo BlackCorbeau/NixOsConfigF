@@ -1,7 +1,7 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-{ config, pkgs, pkgs-unstable, pkgs-fixed, lib, inputs,  ... }:
+{ config, pkgs, pkgs-stable, pkgs-pinned, lib, inputs,  ... }:
 
 {
   imports = [
@@ -16,8 +16,8 @@
     (import ../../user/common.nix {
       inherit config;
       inherit pkgs;
-      inherit pkgs-unstable;
-      inherit pkgs-fixed;
+      inherit pkgs-stable;
+      inherit pkgs-pinned;
       inherit lib;
       inherit inputs;
       name = "kirill";
