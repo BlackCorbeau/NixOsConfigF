@@ -7,5 +7,8 @@
         email = "remizov.kirill2005@yandex.ru";
       };
     };
+    signing = {
+      format = "openpgp";
+    };
   };
 }
