@@ -36,7 +36,12 @@
           read_only = " RO";
         };
         nix_shell.format = "[nix-shell]($style) ";
-        os.disabled = false;
+        os = {
+          disabled = false;
+          symbols = {
+            NixOS = " "; # Этот символ корректно отобразится только при наличии Nerd Fonts
+          };
+        };
         python = {
           symbol = "py ";
           python_binary = ["python3" "python"];
