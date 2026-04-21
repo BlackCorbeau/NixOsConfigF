@@ -33,13 +33,14 @@
         directory = {
           truncation_length = 3;
           fish_style_pwd_dir_length = 1;
-          read_only = " RO";
+          read_only = " 󰌾";
         };
         nix_shell.format = "[nix-shell]($style) ";
         os = {
           disabled = false;
+          style = "bold blue";
           symbols = {
-            NixOS = " "; # Этот символ корректно отобразится только при наличии Nerd Fonts
+            NixOS = "  "; # Этот символ корректно отобразится только при наличии Nerd Fonts
           };
         };
         python = {
