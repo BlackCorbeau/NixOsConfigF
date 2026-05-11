@@ -268,6 +268,24 @@
         "type": "github"
       }
     },
+    "flake-utils_2": {
+      "inputs": {
+        "systems": "systems_4"
+      },
+      "locked": {
+        "lastModified": 1731533236,
+        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
     "fromYaml": {
       "flake": false,
       "locked": {
@@ -899,6 +917,22 @@
         "type": "github"
       }
     },
+    "nixpkgs_8": {
+      "locked": {
+        "lastModified": 1777954456,
+        "narHash": "sha256-hGdgeU2Nk87RAuZyYjyDjFL6LK7dAZN5RE9+hrDTkDU=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "549bd84d6279f9852cae6225e372cc67fb91a4c1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nur": {
       "inputs": {
         "flake-parts": [
@@ -960,7 +994,8 @@
         "russia-blocked-geoip": "russia-blocked-geoip",
         "sops-nix": "sops-nix",
         "stylix": "stylix",
-        "yazi": "yazi"
+        "yazi": "yazi",
+        "zapret-discord-youtube": "zapret-discord-youtube"
       }
     },
     "russia-blocked-geoip": {
@@ -1082,6 +1117,21 @@
       }
     },
     "systems_3": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
+    "systems_4": {
       "locked": {
         "lastModified": 1681028828,
         "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
@@ -1235,6 +1285,42 @@
       "original": {
         "owner": "sxyazi",
         "repo": "yazi",
+        "type": "github"
+      }
+    },
+    "zapret-discord-youtube": {
+      "inputs": {
+        "flake-utils": "flake-utils_2",
+        "nixpkgs": "nixpkgs_8",
+        "zapret-flowseal": "zapret-flowseal"
+      },
+      "locked": {
+        "lastModified": 1777795990,
+        "narHash": "sha256-ln0P3BrWm8ScrwEhSxjLYPTiWWgsUyLospEj0yqRT6Y=",
+        "owner": "kartavkun",
+        "repo": "zapret-discord-youtube",
+        "rev": "0d8c5524ed50f1ff2e4d805ee8a976c4b907bd37",
+        "type": "github"
+      },
+      "original": {
+        "owner": "kartavkun",
+        "repo": "zapret-discord-youtube",
+        "type": "github"
+      }
+    },
+    "zapret-flowseal": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1778422964,
+        "narHash": "sha256-1rjA0QV2X7XVS+SFAKCZXOQKNYdDjjXwgGEiAKgRN6U=",
+        "owner": "Flowseal",
+        "repo": "zapret-discord-youtube",
+        "rev": "459c4c2a2ef01dcab98811de448d19bda0678617",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Flowseal",
+        "repo": "zapret-discord-youtube",
         "type": "github"
       }
     }

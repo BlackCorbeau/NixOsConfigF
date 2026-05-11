@@ -6,6 +6,7 @@
     ./host/sound.nix
     ./host/vpn.nix
     ./host/postgresql.nix
+    ./host/zapret-config.nix
   ];
 
   programs.hyprland.enable = true;

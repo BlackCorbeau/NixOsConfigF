@@ -25,6 +25,8 @@
     ayugram-desktop.url = "github:/ayugram-port/ayugram-desktop/release?submodules=1";
     ags.url = "github:Aylur/ags/3ed9737bdbc8fc7a7c7ceef2165c9109f336bff6";
 
+    zapret-discord-youtube.url = "github:kartavkun/zapret-discord-youtube";
+    
     nixpkgs-pinned.url = "github:nixos/nixpkgs/2d293cbfa5a793b4c50d17c05ef9e385b90edf6c";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11";
@@ -60,6 +62,7 @@
       };
       modules = [
         ./host/${hostname}/configuration.nix
+        inputs.zapret-discord-youtube.nixosModules.default
         { nixpkgs.config = config; }
       ];
     };
