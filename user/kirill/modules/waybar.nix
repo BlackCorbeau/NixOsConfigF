@@ -26,11 +26,11 @@
       ];
 
       modules-right = [
-        "tray"
         "group/system"
         "pulseaudio"
         "battery"
         "clock"
+        "tray"
       ];
 
       cava = {
@@ -51,14 +51,15 @@
       pulseaudio = {
         format = "{icon} {volume}%";
         format-icons = {
-          headphone =  "";
-          hands-free =  "";
-          headset =  "";
-          phone =  "";
-          phone-muted =  "";
-          portable =  "";
-          car =  "";
-          default =  ["" ""];
+          headphone = "󰋋";
+          hands-free = "";
+          headset = "";
+          phone = "";
+          phone-muted = "󱂼";
+          portable = "";
+          car = "";
+          default = ["󰕿" "󰖀" "󰖀" "󰕾" "󰕾"];
+          muted = "󰕿";
         };
         on-click = "ghostty --title=pulsemixer -e pulsemixer";
       };
@@ -292,7 +293,4 @@
     in builtins.readFile cssFile;
   };
 
-  wayland.windowManager.hyprland.settings.layerrule = [
-    "blur on, match:namespace waybar"
-  ];
 }
