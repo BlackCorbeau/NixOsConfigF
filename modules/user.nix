@@ -1,6 +1,5 @@
 {config, lib, ...}: {
     imports = [
-        ./user/waybar.nix
         ./user/mako.nix
         ./user/yazi.nix
         ./user/sleepMode.nix
