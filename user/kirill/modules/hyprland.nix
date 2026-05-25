@@ -60,7 +60,6 @@
       };
 
       dwindle = {
-        pseudotile = true;
         smart_split = true;
       };
 

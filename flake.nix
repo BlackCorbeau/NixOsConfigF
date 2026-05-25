@@ -32,7 +32,12 @@
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11";
     sops-nix.url = "github:Mic92/sops-nix";
     stylix.url = "github:danth/stylix";
+
     yazi.url = "github:sxyazi/yazi";
+    yazi-plugins = {
+      url = "github:yazi-rs/plugins";
+      flake = false;
+    };
 
     hyprland.url = "github:hyprwm/Hyprland/v0.54.2-b";
     hyprland-plugins = {

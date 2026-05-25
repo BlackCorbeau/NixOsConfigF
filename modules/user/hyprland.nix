@@ -26,10 +26,11 @@
     '';
   in {
     enable = true;
+    configType = "hyprlang";
     xwayland.enable = true;
     
-    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
-    plugins = with inputs.hyprland-plugins.packages.${pkgs.system}; [
+    package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+    plugins = with inputs.hyprland-plugins.packages.${pkgs.stdenv.hostPlatform.system}; [
       # hyprbars  # Version mismatch
     ];
 
@@ -123,7 +124,6 @@
         "$mainMod, E, exec, ghostty -e sh -c yazi"
         "$mainMod, F, togglefloating,"
         "$mainMod, D, exec, fuzzel"
-        "$mainMod, P, pseudo, # dwindle"
         "$mainMod, J, layoutmsg, togglesplit, # dwindle"
 
         # Move focus with mainMod + arrow keys
