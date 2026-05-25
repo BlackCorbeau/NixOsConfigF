@@ -28,5 +28,8 @@
         anyfontsize
         scheme-full;
     })
+    # Добавленные шрифты:
+    corefonts   # Microsoft TrueType шрифты (Times New Roman, Arial, Courier New)
+    liberation_ttf  # Ещё один свободный набор с метриками, совместимыми с Times/Arial/Courier
   ];
 }
