@@ -96,7 +96,7 @@
         startShell = "nix-shell . --run zsh";
         VPN = "sudo openvpn --config /home/kirill/VPN/184.22.37.202_udp_1727.ovpn";
         play2Go = "ssh -i ~/.ssh/id_rsa_play2go.pub root@93.123.84.45";
-        
+        testZapret = "sudo zapret-test-strategies";
       };
 
       initContent = ''
