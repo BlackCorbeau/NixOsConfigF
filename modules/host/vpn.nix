@@ -1,4 +1,4 @@
-{ pkgs, config, inputs, ...}: {
+{ inputs, pkgs, config, ... }: {
   systemd.services.v2raya = {
     enable = true;
     description = "v2rayA gui client";
@@ -11,6 +11,7 @@
     wantedBy = [ "multi-user.target" ];
     environment = {
       V2RAYA_LOG_FILE = "/var/log/v2raya/v2raya.log";
+      V2RAYA_V2RAY_BIN = pkgs.lib.getExe pkgs.xray;
       V2RAY_LOCATION_ASSET = "/etc/v2raya";
       XRAY_LOCATION_ASSET = "/etc/v2raya";
     };
