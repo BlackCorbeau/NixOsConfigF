@@ -3,7 +3,7 @@
 {
   services.zapret-discord-youtube = {
     enable = true;
-    config = "general(ALT)";  # Или любой конфиг из папки configs (general, general(ALT), general (SIMPLE FAKE) и т.д.)
+    configName = "general(ALT)";  # Или любой конфиг из папки configs (general, general(ALT), general (SIMPLE FAKE) и т.д.)
 
     # Game Filter: "null" (отключен), "all" (TCP+UDP), "tcp" (только TCP), "udp" (только UDP)
     gameFilter = "null";  # или "all", "tcp", "udp"
