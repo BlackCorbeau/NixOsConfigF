@@ -67,7 +67,7 @@
       };
       modules = [
         ./host/${hostname}/configuration.nix
-        inputs.zapret-discord-youtube.nixosModules.default
+        inputs.zapret-discord-youtube.nixosModules.withTestTools
         { nixpkgs.config = config; }
       ];
     };
