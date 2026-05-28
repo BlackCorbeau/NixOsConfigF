@@ -19,6 +19,7 @@
         "hyprland/language"
         "keyboard-state"
         "cava"
+        "custom/weather"
       ];
 
       modules-center = [
