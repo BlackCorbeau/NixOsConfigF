@@ -8,7 +8,6 @@
         ./user/fazzel.nix
         ./user/btop.nix
         ./user/zsh.nix
-        ./user/packages/tex.nix
         ./user/packages/utils.nix
         ./user/packages/desktop.nix
         ./user/packages/kdenlive.nix
