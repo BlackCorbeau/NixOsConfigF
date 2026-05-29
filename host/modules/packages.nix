@@ -14,6 +14,7 @@
     ncdu
     tldr
     helix
+    bluetui
   ];
 
   fonts = {
@@ -23,7 +24,6 @@
       noto-fonts-cjk-sans     # Japanese
       powerline-symbols       # Console decoration
       unifont                 # Other
-      nerd-fonts.symbols-only
     ];
   };
 }
