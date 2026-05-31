@@ -27,9 +27,9 @@
 
     zapret-discord-youtube.url = "github:kartavkun/zapret-discord-youtube";
     
-    nixpkgs-pinned.url = "github:nixos/nixpkgs/2d293cbfa5a793b4c50d17c05ef9e385b90edf6c";
+    nixpkgs-pinned.url = "github:nixos/nixpkgs/ec942ba042dad5ef097e2ef3a3effc034241f011";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-26.05";
     sops-nix.url = "github:Mic92/sops-nix";
     stylix.url = "github:danth/stylix";
 

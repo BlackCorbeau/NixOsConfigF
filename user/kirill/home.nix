@@ -4,6 +4,9 @@
   ];
   programs.hyprlock.enable = true;
   home.packages = with pkgs; [
-    vivaldi
+    (vivaldi.override {
+      proprietaryCodecs = true;
+      enableWidevine = true;
+    })
   ];
 }
