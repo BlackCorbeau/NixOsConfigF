@@ -124,11 +124,33 @@
         on-click = "ghostty --title=wifitui -e wifitui";
       };
 
-      "custom/weather" = {
+      "custom/weather" = let
+        weather_script = pkgs.writers.writeBashBin "weather_script" {
+        } /*sh*/ '' 
+          #!/usr/bin/env bash
+          for i in {1..5}
+          do
+              text=$(curl -s "https://wttr.in/$1?format=1")
+              if [[ $? == 0 ]]
+              then
+                  text=$(echo "$text" | sed -E "s/\s+/ /g")
+                  tooltip=$(curl -s "https://wttr.in/$1?format=4")
+                  if [[ $? == 0 ]]
+                  then
+                      tooltip=$(echo "$tooltip" | sed -E "s/\s+/ /g")
+                      echo "{\"text\":\"$text\", \"tooltip\":\"$tooltip\"}"
+                      exit
+                  fi
+              fi
+              sleep 2
+          done
+          echo "{\"text\":\"error\", \"tooltip\":\"error\"}"
+        '';
+      in {
         format = "{}";
         tooltip = true;
         interval = 1800;
-        exec = "python3 $HOME/.config/waybar/scripts/wttr.py";
+        exec = "${pkgs.lib.getExe weather_script} Russia+Nizhnij+Novgorod";
         return-type = "json";
       };
 
@@ -178,7 +200,8 @@
         #temperature,
         #keyboard-state label.locked,
         #custom-mem,
-        #clock {
+        #clock,
+        #custom-weather{
           background: ${colors.base00};
           border-radius: ${radius};
           padding: 8px;
