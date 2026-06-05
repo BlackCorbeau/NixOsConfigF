@@ -6,6 +6,7 @@
 {
   imports = [
       ./modules/grab.nix
+      ./modules/bottles.nix
 
     (import ../modules/common.nix {
       inherit lib;
