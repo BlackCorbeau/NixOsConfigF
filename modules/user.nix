@@ -5,7 +5,7 @@
         ./user/sleepMode.nix
         ./user/ghostty.nix
         ./user/zed-idea.nix
-        ./user/fazzel.nix
+        ./user/walker.nix
         ./user/btop.nix
         ./user/zsh.nix
         ./user/packages/utils.nix

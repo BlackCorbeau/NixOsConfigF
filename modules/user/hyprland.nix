@@ -123,7 +123,6 @@
         "$mainMod, M, exit,"
         "$mainMod, E, exec, ghostty -e sh -c yazi"
         "$mainMod, F, togglefloating,"
-        "$mainMod, D, exec, fuzzel"
         "$mainMod, J, layoutmsg, togglesplit, # dwindle"
 
         # Move focus with mainMod + arrow keys
