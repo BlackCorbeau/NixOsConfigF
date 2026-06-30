@@ -6,5 +6,6 @@
     obsidian
     pkgs-stable.qbittorrent
     libreoffice
+    pear-desktop
   ];
 }
