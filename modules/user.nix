@@ -12,5 +12,6 @@
         ./user/packages/desktop.nix
         ./user/packages/kdenlive.nix
         ./user/quickshell.nix
+        ./user/wob.nix
     ];
 }
