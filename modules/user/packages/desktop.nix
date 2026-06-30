@@ -1,10 +1,10 @@
-{ pkgs, inputs, pkgs-pinned, ... }: {
+{ pkgs, inputs, pkgs-stable, ... }: {
   home.packages = with pkgs; [
-    pkgs-pinned.ayugram-desktop
+    ayugram-desktop
     obs-studio
     mpv
     obsidian
-    qbittorrent
+    pkgs-stable.qbittorrent
     libreoffice
   ];
 }
