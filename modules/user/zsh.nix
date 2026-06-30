@@ -59,7 +59,7 @@
 
       shellAliases =
         let
-          flakeDir = "~/.config/f";
+          flakeDir = "~/.config/nixos";
         in {
         rb = "nh os switch ${flakeDir}";
         upd = "nix flake update ${flakeDir}";
