@@ -1,4 +1,18 @@
-{ pkgs, config, lib, ... }: {
+{ pkgs, config, lib, ... }: let
+  pixeloid = pkgs.stdenvNoCC.mkDerivation {
+    name = "Pixeloid";
+    dontUnpack = true;
+
+    src = pkgs.fetchurl {
+      url = "https://lair.moe/static/font/Pixeloid/otf/Sans.otf";
+      hash = "sha256-GTf2BnhH0Pzc3Bbevmd+mA6t8lZFMUxX9wkSqWicuSc=";
+    };
+
+    installPhase = ''
+      install -Dm644 "$src" "$out/share/fonts/opentype/Sans.otf"
+    '';
+  };
+in {
   stylix = {
     enable = true;
     overlays.enable = false;
@@ -39,6 +53,11 @@
     serif = {
         name = "GabrieLa";
         package = (pkgs.google-fonts.override { fonts = [ "Gabriela" ]; });
+      };
+
+    sansSerif = {
+        name = "Pixeloid Sans";
+        package = pixeloid;
       };
 
     emoji = {
