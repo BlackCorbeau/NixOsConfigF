@@ -7,6 +7,7 @@
   imports = [
       ./modules/grab.nix
       ./modules/bottles.nix
+      ./modules/swap.nix
 
     (import ../modules/common.nix {
       inherit lib;
