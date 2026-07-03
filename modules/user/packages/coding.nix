@@ -5,7 +5,7 @@
     lazygit
     git
     tree
-    zed-editor
+    opencode
     postgresql
     dbgate
   ];

@@ -8,6 +8,7 @@
     ./host/postgresql.nix
     #./host/zapret-config.nix
     ./host/network.nix
+    #./host/ai-agent.nix
   ];
 
   programs.hyprland.enable = true;
