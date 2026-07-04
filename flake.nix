@@ -74,6 +74,7 @@
   in {
     nixosConfigurations = {
       WhiteRaven = mkHost "WhiteRaven";
+      ThinkPad = mkHost "ThinkPad";
     };
   };
 }

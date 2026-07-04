@@ -15,6 +15,7 @@
     tldr
     helix
     bluetui
+    fastfetch
   ];
 
   fonts = {
