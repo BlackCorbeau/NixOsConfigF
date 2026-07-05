@@ -7,6 +7,8 @@
   imports = [
       ./modules/grab.nix
       ./modules/swap.nix
+      ./modules/intel.nix
+      ./modules/nvidia.nix
 
     (import ../modules/common.nix {
       inherit lib;

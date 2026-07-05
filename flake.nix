@@ -60,7 +60,10 @@
   
   outputs = { self, nixpkgs, nixpkgs-stable, nixpkgs-pinned, home-manager, ... }@inputs: let
     system = "x86_64-linux";
-    config = { allowUnfree = true; };
+    config = {
+      allowUnfree = true;
+      nvidia.acceptLicense = true;
+    };
     mkHost = hostname: nixpkgs.lib.nixosSystem {
       specialArgs = {
         inherit inputs;
