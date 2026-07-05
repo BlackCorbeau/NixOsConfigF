@@ -13,6 +13,8 @@
     '';
   };
 in {
+  gtk.gtk4.theme = lib.mkForce config.gtk.theme;
+
   stylix = {
     enable = true;
     overlays.enable = false;
