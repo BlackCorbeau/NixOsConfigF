@@ -9,6 +9,7 @@
       ./modules/swap.nix
       ./modules/intel.nix
       ./modules/nvidia.nix
+      ./modules/fingerprint.nix
 
     (import ../modules/common.nix {
       inherit lib;
