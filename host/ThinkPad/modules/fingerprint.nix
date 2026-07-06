@@ -1,7 +1,10 @@
 { config, ... }: {
   services.fprintd.enable = true;
 
-  security.pam.services.sudo.fprintAuth = true;
+  security.pam.services = {
+    sudo.fprintAuth = true;
+    login.fprintAuth = false;
+  };
 
   security.polkit.extraConfig = ''
     polkit.addRule(function(action, subject) {
