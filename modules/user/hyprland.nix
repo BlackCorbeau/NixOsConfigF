@@ -109,7 +109,7 @@
       exec-once = [
         "systemctl --user start plasma-polkit-agent"
         "${lib.getExe' pkgs.awww "awww-daemon"}"
-        "${lib.getExe wallpaper_changer}"
+        "${pkgs.bash}/bin/bash -c 'sleep 1 && ${lib.getExe wallpaper_changer}'"
         "wl-clip-persist --clipboard both"
         "clipse -listen"
         "${lib.getExe' pkgs.udiskie "udiskie"}"
