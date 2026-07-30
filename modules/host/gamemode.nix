@@ -1,14 +1,17 @@
-{pkgs, ...}: {
-  programs.steam.enable = true;
-  programs.steam.gamescopeSession.enable = true;
-  programs.gamemode.enable = true;
+{ config, pkgs, lib, ... }:
+
+lib.mkIf config.programs.gamemode.enable {
+  programs.steam = {
+    enable = true;
+    gamescopeSession.enable = true;
+  };
 
   environment.systemPackages = with pkgs; [
     mangohud
     protonup-ng
     bottles
     heroic
-    vesktop
+    prismlauncher
   ];
 
   environment.sessionVariables = {
