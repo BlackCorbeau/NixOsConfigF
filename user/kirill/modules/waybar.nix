@@ -32,9 +32,8 @@
 
   pinnedApps = [
     { id = "browser"; icon = "󰖟"; command = "vivaldi"; }
-    { id = "terminal"; icon = "󰊠"; command = "ghostty"; }
-    { id = "telegram"; icon = "󰇮"; command = "ayugram-desktop"; }
-    { id = "notes"; icon = "󰈙"; command = "obsidian"; }
+    { id = "telegram"; icon = ""; command = "AyuGram"; }
+    { id = "notes"; icon = ""; command = "clash-verge"; }
   ];
 
   pinnedModules = lib.listToAttrs (map (a: lib.nameValuePair "custom/pin-${a.id}" {
@@ -69,22 +68,18 @@
       spacing = 0;
       modules-left = [ "custom/network-speed" ];
       modules-center = map (a: "custom/pin-${a.id}") pinnedApps;
-      modules-right = [ "custom/restart" "custom/power" ];
-      "custom/power" = {
-        format = "";
-        on-click = "systemctl poweroff";
-        tooltip = false;
-      };
-      "custom/restart" = {
-        format = "";
-        on-click = "systemctl reboot";
-        tooltip = false;
-      };
+      modules-right = [ "disk" ];
       "custom/network-speed" = {
         exec = "${lib.getExe networkSpeed}";
         interval = 2;
         rotate = 90;
         tooltip = false;
+      };
+      disk = {
+        interval = 30;
+        rotate = 90;
+        format = "{used}/{free}";
+        paths = [ "/" ];
       };
     } // pinnedModules));
   };
@@ -106,9 +101,8 @@
         font-size: 1.3em;
       }
 
-      #custom-power,
-      #custom-restart,
-      #custom-network-speed {
+      #custom-network-speed,
+      #disk {
         background: ${c.base00};
         color: ${c.base05};
         border-radius: 6px;
@@ -116,9 +110,8 @@
         margin: 4px;
       }
 
-      #custom-power:hover,
-      #custom-restart:hover,
-      #custom-network-speed:hover {
+      #custom-network-speed:hover,
+      #disk:hover {
         background: ${c.base0B};
         color: ${c.base00};
       }
