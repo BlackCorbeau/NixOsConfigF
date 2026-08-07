@@ -33,7 +33,7 @@
   pinnedApps = [
     { id = "browser"; icon = "󰖟"; command = "vivaldi"; }
     { id = "telegram"; icon = ""; command = "AyuGram"; }
-    { id = "notes"; icon = ""; command = "clash-verge"; }
+    { id = "vpn"; icon = ""; command = "clash-verge"; }
   ];
 
   pinnedModules = lib.listToAttrs (map (a: lib.nameValuePair "custom/pin-${a.id}" {
