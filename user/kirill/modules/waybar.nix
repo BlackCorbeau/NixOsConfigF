@@ -146,7 +146,7 @@
       cp -f "${leftbarCss.collapsed}" "$css"
 
       while true; do
-        pos="$($hyprctl cursorpos 2>/dev/null)" || pos=""
+        pos="$(${pkgs.coreutils}/bin/timeout 1 "$hyprctl" cursorpos 2>/dev/null)" || pos=""
         x="''${pos%%,*}"
         if [ -n "$x" ]; then
           if [ "$state" != expanded ] && [ "$x" -ge 0 ] && [ "$x" -le 1 ]; then
@@ -505,6 +505,7 @@ in {
     };
     Service = {
       ExecStart = "${lib.getExe pkgs.waybar} -c %t/leftbar.json -s %t/leftbar.css";
+      KillMode = "process";
       Restart = "on-failure";
       RestartSec = 2;
     };
