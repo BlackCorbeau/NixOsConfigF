@@ -30,6 +30,22 @@
     '';
   };
 
+  pinnedApps = [
+    { id = "browser"; icon = "󰖟"; command = "vivaldi"; }
+    { id = "terminal"; icon = "󰊠"; command = "ghostty"; }
+    { id = "telegram"; icon = "󰇮"; command = "ayugram-desktop"; }
+    { id = "notes"; icon = "󰈙"; command = "obsidian"; }
+  ];
+
+  pinnedModules = lib.listToAttrs (map (a: lib.nameValuePair "custom/pin-${a.id}" {
+    format = a.icon;
+    on-click = a.command;
+    tooltip = false;
+  }) pinnedApps);
+
+  pinnedCss = lib.concatMapStringsSep "," (a: "#custom-pin-${a.id}") pinnedApps;
+  pinnedCssHover = lib.concatMapStringsSep "," (a: "#custom-pin-${a.id}:hover") pinnedApps;
+
   leftbarJson = {
     collapsed = pkgs.writeText "leftbar-collapsed.json" (builtins.toJSON {
       layer = "top";
@@ -45,14 +61,14 @@
       };
     });
 
-    expanded = pkgs.writeText "leftbar-expanded.json" (builtins.toJSON {
+    expanded = pkgs.writeText "leftbar-expanded.json" (builtins.toJSON ({
       layer = "top";
       exclusive = false;
       position = "left";
       width = leftWidth;
       spacing = 0;
-      modules-left = [ "custom/network-speed" "disk" ];
-      modules-center = [ ];
+      modules-left = [ "custom/network-speed" ];
+      modules-center = map (a: "custom/pin-${a.id}") pinnedApps;
       modules-right = [ "custom/restart" "custom/power" ];
       "custom/power" = {
         format = "";
@@ -70,13 +86,7 @@
         rotate = 90;
         tooltip = false;
       };
-      disk = {
-        interval = 30;
-        rotate = 90;
-        format = "{percentage_free}%";
-        paths = [ "/" ];
-      };
-    });
+    } // pinnedModules));
   };
 
   leftbarCss = {
@@ -98,8 +108,7 @@
 
       #custom-power,
       #custom-restart,
-      #custom-network-speed,
-      #disk {
+      #custom-network-speed {
         background: ${c.base00};
         color: ${c.base05};
         border-radius: 6px;
@@ -109,10 +118,22 @@
 
       #custom-power:hover,
       #custom-restart:hover,
-      #custom-network-speed:hover,
-      #disk:hover {
+      #custom-network-speed:hover {
         background: ${c.base0B};
         color: ${c.base00};
+      }
+
+      ${pinnedCss} {
+        background: ${c.base00};
+        color: ${c.base04};
+        border-radius: 6px;
+        min-height: 34px;
+        margin: 4px;
+      }
+
+      ${pinnedCssHover} {
+        background: ${c.base01};
+        color: ${c.base0B};
       }
     '';
   };
