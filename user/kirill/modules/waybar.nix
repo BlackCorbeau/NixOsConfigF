@@ -133,7 +133,7 @@
 
   leftbarHover = pkgs.writeShellApplication {
     name = "leftbar-hover";
-    runtimeInputs = [ pkgs.coreutils pkgs.systemd ];
+    runtimeInputs = [ pkgs.coreutils pkgs.systemd pkgs.findutils ];
     text = ''
       set -euo pipefail
       hyprctl="${(config.wayland.windowManager.hyprland.package or pkgs.hyprland)}/bin/hyprctl"
@@ -146,6 +146,8 @@
       cp -f "${leftbarCss.collapsed}" "$css"
 
       while true; do
+        sig=$(basename "$(find "$rt/hypr" -mindepth 1 -maxdepth 1 -type d 2>/dev/null | head -1)")
+        [ -n "$sig" ] && export HYPRLAND_INSTANCE_SIGNATURE="$sig"
         pos="$(${pkgs.coreutils}/bin/timeout 1 "$hyprctl" cursorpos 2>/dev/null)" || pos=""
         x="''${pos%%,*}"
         if [ -n "$x" ]; then
