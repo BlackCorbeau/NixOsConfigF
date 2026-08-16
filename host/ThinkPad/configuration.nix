@@ -8,6 +8,7 @@
       ./modules/grab.nix
       ./modules/swap.nix
       ./modules/intel.nix
+      ./modules/grab.nix
       ./modules/nvidia.nix
       ./modules/fingerprint.nix
 
@@ -28,6 +29,9 @@
       fullname = "Black Raven";
     })
   ];
+
+  host.laptop = true;
+  host.nvidia.prime.enable = true;
 
   programs.gamemode.enable = true;
   hardware.bluetooth.enable = true;
