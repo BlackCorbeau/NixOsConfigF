@@ -4,6 +4,7 @@
         ./user/yazi.nix
         ./user/sleepMode.nix
         ./user/ghostty.nix
+        ./user/qt.nix
         ./user/zed-idea.nix
         ./user/walker.nix
         ./user/btop.nix

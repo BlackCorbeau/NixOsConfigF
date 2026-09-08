@@ -1,5 +1,8 @@
-{ pkgs, lib, ... }: {
-  wayland.windowManager.hyprland.settings.exec-once = [ "hyprlock" ];
+{ pkgs, lib, ... }:
+let
+  hyprLua = import ./hyprland/lua.nix { inherit lib; };
+in {
+  wayland.windowManager.hyprland.settings.on = [ (hyprLua.onStart [ "hyprlock" ]) ];
 
   programs.hyprlock = let
     image = pkgs.fetchurl {

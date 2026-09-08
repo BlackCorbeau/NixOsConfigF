@@ -1,4 +1,5 @@
 { config, pkgs, lib, ... }: let
+  hyprLua = import ./hyprland/lua.nix { inherit lib; };
   c = config.lib.stylix.colors;
 
   wobSocket = ''"''${XDG_RUNTIME_DIR:-/run/user/$(id -u)}/wob.sock"'';
@@ -53,16 +54,11 @@ in {
     };
   };
 
-  wayland.windowManager.hyprland.settings = {
-    bindel = [
-      ", XF86AudioRaiseVolume,  exec, ${lib.getExe volumeStep}     up"
-      ", XF86AudioLowerVolume,  exec, ${lib.getExe volumeStep}     down"
-      ", XF86MonBrightnessUp,   exec, ${lib.getExe brightnessStep} up"
-      ", XF86MonBrightnessDown, exec, ${lib.getExe brightnessStep} down"
-    ];
-
-    bind = [
-      ", XF86AudioMute,         exec, ${lib.getExe volumeStep}     mute"
-    ];
-  };
+  wayland.windowManager.hyprland.settings.bind = [
+    (hyprLua.bindWithFlags "XF86AudioRaiseVolume" (hyprLua.exec "${lib.getExe volumeStep} up") { repeating = true; locked = true; })
+    (hyprLua.bindWithFlags "XF86AudioLowerVolume" (hyprLua.exec "${lib.getExe volumeStep} down") { repeating = true; locked = true; })
+    (hyprLua.bindWithFlags "XF86MonBrightnessUp" (hyprLua.exec "${lib.getExe brightnessStep} up") { repeating = true; locked = true; })
+    (hyprLua.bindWithFlags "XF86MonBrightnessDown" (hyprLua.exec "${lib.getExe brightnessStep} down") { repeating = true; locked = true; })
+    (hyprLua.bind "XF86AudioMute" (hyprLua.exec "${lib.getExe volumeStep} mute"))
+  ];
 }

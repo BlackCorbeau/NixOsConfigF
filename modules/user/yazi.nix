@@ -121,8 +121,14 @@ in {
     Exec=${lib.getExe fileManager1}
   '';
 
-  wayland.windowManager.hyprland.settings.windowrule = [
-    "match:class dragon-drop, move cursor_x-window_w/2 cursor_y-window_h/2"
+  wayland.windowManager.hyprland.settings.window_rule = [
+    {
+      match.class = "dragon-drop";
+      move = [
+        "(cursor_x-(window_w*0.5))"
+        "(cursor_y-(window_h*0.5))"
+      ];
+    }
   ];
 
   programs.yazi = {

@@ -13,8 +13,6 @@
     '';
   };
 in {
-  gtk.gtk4.theme = lib.mkForce config.gtk.theme;
-
   stylix = {
     enable = true;
     overlays.enable = false;
@@ -76,6 +74,19 @@ in {
     opacity = {
       popups = .8;
       terminal = .5;
+    };
+  };
+
+  dconf.settings = {
+    "org/gnome/desktop/interface".color-scheme = "prefer-dark";
+  };
+
+  gtk = {
+    gtk4.extraConfig = {
+      gtk-application-prefer-dark-theme = true;
+    };
+    gtk3.extraConfig = {
+      gtk-application-prefer-dark-theme = true;
     };
   };
 

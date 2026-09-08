@@ -25,6 +25,8 @@
       noto-fonts-cjk-sans     # Japanese
       powerline-symbols       # Console decoration
       unifont                 # Other
+      (pkgs.google-fonts.override { fonts = [ "Gabriela" ]; })
     ];
   };
+  fonts.fontconfig.enable = true;
 }

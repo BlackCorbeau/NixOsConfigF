@@ -1,3 +1,4 @@
+{ pkgs, ... }:
 {
   imports = [
     ./host/bluetooth.nix
@@ -13,7 +14,24 @@
     #./host/ai-agent.nix
   ];
 
-  programs.hyprland.enable = true;
+  programs = {
+    dconf.enable = true;
+    hyprland.enable = true;
+  };
+
+  xdg.portal = {
+    enable = true;
+    xdgOpenUsePortal = true;
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-hyprland
+      xdg-desktop-portal-gtk
+      xdg-desktop-portal-termfilechooser
+    ];
+    config = {
+      common.default = [ "hyprland" "gtk" ];
+      hyprland.default = [ "hyprland" "gtk" ];
+    };
+  };
   services = {
     udisks2.enable = true;
     fstrim.enable = true;
