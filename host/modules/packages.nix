@@ -16,6 +16,7 @@
     helix
     bluetui
     fastfetch
+    thunderbird
   ];
 
   fonts = {
