@@ -21,7 +21,16 @@ let
 in {
   imports = lib.optional (host != null && builtins.pathExists ../../host/${host.name}/modules/hyprland.nix) ../../host/${host.name}/modules/hyprland.nix;
 
-  home.packages = with pkgs; [ ghostty pamixer wofi clipse wl-clipboard wl-clip-persist xclip ];
+  home.packages = with pkgs; [
+    wallpaper_changer
+    ghostty
+    pamixer
+    wofi
+    clipse
+    wl-clipboard
+    wl-clip-persist
+    xclip
+  ];
   wayland.windowManager.hyprland = {
     enable = true;
     configType = "lua";
@@ -88,6 +97,7 @@ in {
         (hyprLua.bind "SUPER + E" (hyprLua.exec "ghostty -e sh -c yazi"))
         (hyprLua.bind "SUPER + F" "hl.dsp.window.float({ action = \"toggle\" })")
         (hyprLua.bind "SUPER + J" "hl.dsp.layout(\"togglesplit\")")
+        (hyprLua.bind "SUPER + W" (hyprLua.exec "${lib.getExe wallpaper_changer}"))
         (hyprLua.bind "SUPER + LEFT" "hl.dsp.focus({ direction = \"${direction.left}\" })")
         (hyprLua.bind "SUPER + RIGHT" "hl.dsp.focus({ direction = \"${direction.right}\" })")
         (hyprLua.bind "SUPER + UP" "hl.dsp.focus({ direction = \"${direction.up}\" })")

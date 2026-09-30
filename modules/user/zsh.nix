@@ -88,7 +88,7 @@
         openWayBar = "vim .config/f/home-manager/data/waybar.nix";
         rebuildFlake = "sudo nixos-rebuild switch --flake /home/kirill/.config/f --impure";
         openFlake = "vim /home/kirill/.config/f/flake.nix";
-        swichWalls = "python3 /nix/store/6czqsnf0gbvvm472lipndyg34qhnfpis-wallpaper_changer/bin/wallpaper_changer";
+        swichWalls = "wallpaper_changer";
         screenshot_f="grimblast save screen ~/screenshot_$(date +\%Y-\%m-\%d_\%H-\%M-\%S).png";
         screenshot="grimblast save area ~/screenshot_$(date +\%Y-\%m-\%d_\%H-\%M-\%S).png";
         screenshot_c = "grimblast copy area";
