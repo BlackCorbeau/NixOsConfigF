@@ -9,7 +9,7 @@
       ./modules/swap.nix
       ./modules/intel.nix
       ./modules/grab.nix
-      ./modules/nvidia.nix
+      #./modules/nvidia.nix
       ./modules/fingerprint.nix
 
     (import ../modules/common.nix {
