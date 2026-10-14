@@ -1,5 +1,16 @@
 { pkgs, lib, config, inputs, host, ... }:
-{
+let
+  wallpaper_changer = pkgs.writers.writePython3Bin "wallpaper_changer" {
+    libraries = [ pkgs.python3Packages.requests ];
+    flakeIgnore = [ "E501" "E111" "E701" "E241" "E731" ];
+  } /*py*/ ''
+    from random import choice
+    from os import system, listdir
+    folder = "${config.home.homeDirectory}/wallpapers"
+    filename = choice(listdir(folder))
+    system(f"${lib.getExe pkgs.awww} img {folder}/{filename} --transition-type center")
+  '';
+in {
   imports = [(
     import ../../../modules/user/hyprland.nix {
       inherit lib;
@@ -7,9 +18,10 @@
       inherit config;
       inherit inputs;
       inherit host;
-      swww_flags = "--transition-type center";
     }
   )];
+
+  home.packages = [ wallpaper_changer ];
 
   wayland.windowManager.hyprland = let
     colors = config.lib.stylix.colors;
@@ -89,7 +101,12 @@
         }
       ];
 
+      on = [
+        (hyprLua.onStart [ "${lib.getExe wallpaper_changer}" ])
+      ];
+
       bind = [
+        (hyprLua.bind "SUPER + W" (hyprLua.exec "${lib.getExe wallpaper_changer}"))
         (hyprLua.bind "SUPER + SHIFT + S" (hyprLua.exec "${lib.getExe pkgs.grimblast} --notify --freeze copy area"))
         (hyprLua.bind "F11" (hyprLua.exec "ghostty -e sh -c hyprlock"))
       ];

@@ -89,13 +89,7 @@
         rebuildFlake = "sudo nixos-rebuild switch --flake /home/kirill/.config/f --impure";
         openFlake = "vim /home/kirill/.config/f/flake.nix";
         swichWalls = "wallpaper_changer";
-        screenshot_f="grimblast save screen ~/screenshot_$(date +\%Y-\%m-\%d_\%H-\%M-\%S).png";
-        screenshot="grimblast save area ~/screenshot_$(date +\%Y-\%m-\%d_\%H-\%M-\%S).png";
-        screenshot_c = "grimblast copy area";
-        loginPostgresql = "sudo -u postgres psql";
-        startShell = "nix-shell . --run zsh";
-        VPN = "sudo openvpn --config /home/kirill/VPN/184.22.37.202_udp_1727.ovpn";
-        play2Go = "ssh -i ~/.ssh/id_rsa_play2go.pub root@93.123.84.45";
+        shell = "nix-shell . --run zsh";
         testZapret = "sudo zapret-test-strategies";
       };
 
@@ -103,6 +97,10 @@
         eval "$(zoxide init zsh)"
         source "$(fzf-share)/key-bindings.zsh"
         source "$(fzf-share)/completion.zsh"
+
+        run() {
+          nix run "nixpkgs#$1"
+        }
       '';
 
       envExtra = ''

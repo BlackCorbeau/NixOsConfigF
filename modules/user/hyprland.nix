@@ -1,17 +1,7 @@
-{ pkgs, lib, config, swww_flags, inputs, host ? null }:
+{ pkgs, lib, config, inputs, host ? null }:
 let
   hyprLua = import ./hyprland/lua.nix { inherit lib; };
   direction = { left = "l"; right = "r"; up = "u"; down = "d"; };
-  wallpaper_changer = pkgs.writers.writePython3Bin "wallpaper_changer" {
-    libraries = [ pkgs.python3Packages.requests ];
-    flakeIgnore = [ "E501" "E111" "E701" "E241" "E731" ];
-  } /*py*/ ''
-    from random import choice
-    from os import system, listdir
-    folder = "${config.home.homeDirectory}/wallpapers"
-    filename = choice(listdir(folder))
-    system(f"${lib.getExe pkgs.awww} img {folder}/{filename} ${swww_flags}")
-  '';
   workspaceBinds = lib.concatMap (workspace:
     let key = if workspace == 10 then "0" else toString workspace; workspaceValue = toString workspace;
     in [
@@ -22,7 +12,6 @@ in {
   imports = lib.optional (host != null && builtins.pathExists ../../host/${host.name}/modules/hyprland.nix) ../../host/${host.name}/modules/hyprland.nix;
 
   home.packages = with pkgs; [
-    wallpaper_changer
     ghostty
     pamixer
     wofi
@@ -87,7 +76,6 @@ in {
         "wl-clip-persist --clipboard both"
         "clipse -listen"
         "${lib.getExe' pkgs.udiskie "udiskie"}"
-        "${lib.getExe wallpaper_changer}"
       ]) ];
       bind = [
         (hyprLua.bind "SUPER + V" (hyprLua.exec "ghostty --title=clipse -e clipse"))
@@ -97,7 +85,6 @@ in {
         (hyprLua.bind "SUPER + E" (hyprLua.exec "ghostty -e sh -c yazi"))
         (hyprLua.bind "SUPER + F" "hl.dsp.window.float({ action = \"toggle\" })")
         (hyprLua.bind "SUPER + J" "hl.dsp.layout(\"togglesplit\")")
-        (hyprLua.bind "SUPER + W" (hyprLua.exec "${lib.getExe wallpaper_changer}"))
         (hyprLua.bind "SUPER + LEFT" "hl.dsp.focus({ direction = \"${direction.left}\" })")
         (hyprLua.bind "SUPER + RIGHT" "hl.dsp.focus({ direction = \"${direction.right}\" })")
         (hyprLua.bind "SUPER + UP" "hl.dsp.focus({ direction = \"${direction.up}\" })")
