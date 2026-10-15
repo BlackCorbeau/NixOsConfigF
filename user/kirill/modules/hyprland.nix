@@ -2,13 +2,134 @@
 let
   wallpaper_changer = pkgs.writers.writePython3Bin "wallpaper_changer" {
     libraries = [ pkgs.python3Packages.requests ];
-    flakeIgnore = [ "E501" "E111" "E701" "E241" "E731" ];
+    flakeIgnore = [ "E111" "E121" "E241" "E501" "E701" "E731" ];
   } /*py*/ ''
+    import requests as requests
     from random import choice
-    from os import system, listdir
+    from os import listdir, makedirs, remove, replace, system
+    from os.path import exists, getmtime, isfile
+    from subprocess import run
+
+    notify_id = None
+
+
+    def notify(text, progress=None, expire_time=5000):
+      global notify_id
+
+      command = [
+        "${pkgs.libnotify}/bin/notify-send",
+        "--app-name", "wallpaper_changer",
+        "--print-id",
+        "--expire-time", str(expire_time),
+      ]
+
+      if notify_id:
+        command.extend(["--replace-id", str(notify_id)])
+
+      if progress is not None:
+        command.extend(["--hint", f"int:value:{progress}"])
+
+      command.extend(["Wallpaper", text])
+
+      result = run(command, capture_output=True, text=True, check=False)
+      output = result.stdout.strip()
+      if output.isdigit():
+        notify_id = output
+
+
+    def download_with_progress(link, destination):
+      temporary = f"{destination}.part"
+      downloaded = 0
+      last_progress = -1
+
+      response = None
+      try:
+        response = requests.get(link, stream=True, timeout=30)
+        response.raise_for_status()
+        total = int(response.headers.get("content-length", 0))
+
+        with open(temporary, "wb") as file:
+          for chunk in response.iter_content(chunk_size=256 * 1024):
+            if not chunk:
+              continue
+
+            file.write(chunk)
+            downloaded += len(chunk)
+
+            if total <= 0:
+              continue
+
+            progress = min(100, downloaded * 100 // total)
+            if progress == 100 or progress >= last_progress + 2:
+              notify(f"Downloading... {progress}%", progress, 0)
+              last_progress = progress
+
+        replace(temporary, destination)
+      except Exception:
+        if exists(temporary):
+          remove(temporary)
+        raise
+      finally:
+        if response is not None:
+          response.close()
+
+
+    def prune(folder, keep=20):
+      files = [
+        (name, getmtime(f"{folder}/{name}"))
+        for name in listdir(folder)
+        if isfile(f"{folder}/{name}") and not name.endswith(".part")
+      ]
+
+      if len(files) <= keep:
+        return
+
+      for name, _ in sorted(files, key=lambda item: item[1])[:len(files) - keep]:
+        remove(f"{folder}/{name}")
+
+
     folder = "${config.home.homeDirectory}/wallpapers"
-    filename = choice(listdir(folder))
-    system(f"${lib.getExe pkgs.awww} img {folder}/{filename} --transition-type center")
+    url = "https://wallhaven.cc/api/v1/collections/BlackRaven21/2284568"
+
+    filename = None
+    notify("Updating wallpaper...", 0)
+
+    try:
+      response = requests.get(url, timeout=10)
+      response.raise_for_status()
+      json = response.json()
+
+      wallpaper = choice(json['data'])
+      link = wallpaper['path']
+      format = wallpaper['file_type']
+      id = wallpaper['id']
+
+      if format == "image/jpeg": ext = "jpg"
+      else:                      ext = "png"
+
+      filename = f"{id}.{ext}"
+      destination = f"{folder}/{filename}"
+
+      if not exists(destination):
+        makedirs(folder, exist_ok=True)
+        notify("Downloading... 0%", 0, 0)
+        download_with_progress(link, destination)
+        notify("Downloaded", 100)
+        prune(folder)
+      else:
+        notify("Using cached wallpaper", 100)
+
+    except requests.exceptions.RequestException:
+      notify("Offline mode")
+      try:
+        filename = choice(listdir(folder))
+      except (FileNotFoundError, IndexError):
+        notify("Offline mode and wallpaper cache is empty")
+
+    finally:
+      if filename is not None:
+        notify("Applying wallpaper", 100)
+        system(f"${lib.getExe pkgs.awww} img {folder}/{filename} --transition-type center")
   '';
 in {
   imports = [(
