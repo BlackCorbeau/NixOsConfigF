@@ -91,6 +91,8 @@
         swichWalls = "wallpaper_changer";
         shell = "nix-shell . --run zsh";
         testZapret = "sudo zapret-test-strategies";
+
+        charge = "sudo tlp setcharge 90 95 BAT0 && sudo tlp setcharge 90 95 BAT1 && echo 'Зарядка обеих батарей до 95% запущена (только на текущую сессию)'";
       };
 
       initContent = ''
