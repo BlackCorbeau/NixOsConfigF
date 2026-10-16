@@ -11,6 +11,7 @@
       ./modules/grab.nix
       ./modules/thinkpad.nix
       ./modules/fingerprint.nix
+      ./secrets/secrets.nix
 
     (import ../modules/common.nix {
       inherit lib;
