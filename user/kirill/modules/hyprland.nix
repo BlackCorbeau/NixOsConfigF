@@ -1,12 +1,17 @@
-{ pkgs, lib, config, inputs, host, ... }:
+{ pkgs, lib, config, inputs, host, osConfig, ... }:
 let
+  secretPath =
+    if osConfig ? sops.secrets.wallhaven
+    then osConfig.sops.secrets.wallhaven.path
+    else "";
+
   wallpaper_changer = pkgs.writers.writePython3Bin "wallpaper_changer" {
     libraries = [ pkgs.python3Packages.requests ];
     flakeIgnore = [ "E111" "E121" "E241" "E501" "E701" "E731" ];
   } /*py*/ ''
     import requests as requests
     from random import choice
-    from os import listdir, makedirs, remove, replace, system
+    from os import environ, getuid, listdir, makedirs, remove, replace, system
     from os.path import exists, getmtime, isfile
     from subprocess import run
 
@@ -88,18 +93,61 @@ let
         remove(f"{folder}/{name}")
 
 
+    def read_history(path):
+      try:
+        with open(path) as file:
+          return [line.strip() for line in file if line.strip()]
+      except OSError:
+        return []
+
+
+    def write_history(path, ids):
+      try:
+        with open(path, "w") as file:
+          file.write("\n".join(dict.fromkeys(ids)) + "\n")
+      except OSError:
+        pass
+
+
     folder = "${config.home.homeDirectory}/wallpapers"
     url = "https://wallhaven.cc/api/v1/collections/BlackRaven21/2284568"
+    runtime = environ.get("XDG_RUNTIME_DIR") or f"/run/user/{getuid()}"
+    history = f"{runtime}/wallpaper_changer_history"
+
+    token = None
+    try:
+      with open("${secretPath}") as file:
+        token = file.read().strip() or None
+    except OSError:
+      pass
 
     filename = None
     notify("Updating wallpaper...", 0)
 
     try:
-      response = requests.get(url, timeout=10)
-      response.raise_for_status()
-      json = response.json()
+      params = {}
+      if token:
+        params["apikey"] = token
 
-      wallpaper = choice(json['data'])
+      response = requests.get(url, params=params, timeout=10)
+      response.raise_for_status()
+      page_json = response.json()
+
+      walls = list(page_json['data'])
+      for page in range(2, page_json['meta']['last_page'] + 1):
+        params['page'] = page
+        response = requests.get(url, params=params, timeout=10)
+        response.raise_for_status()
+        walls.extend(response.json()['data'])
+
+      seen = read_history(history)
+      candidates = [wall for wall in walls if wall['id'] not in seen]
+
+      if not candidates:
+        seen = []
+        candidates = walls
+
+      wallpaper = choice(candidates)
       link = wallpaper['path']
       format = wallpaper['file_type']
       id = wallpaper['id']
@@ -118,6 +166,8 @@ let
         prune(folder)
       else:
         notify("Using cached wallpaper", 100)
+
+      write_history(history, seen + [id])
 
     except requests.exceptions.RequestException:
       notify("Offline mode")
