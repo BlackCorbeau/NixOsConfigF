@@ -1,7 +1,11 @@
 keys:
-  - &kirill age1tx6jdr6535xxeygpwkkgvdwc24tulr420cm7gk56xzfp0slzeqks2nwpyg
+  - &key age1tx6jdr6535xxeygpwkkgvdwc24tulr420cm7gk56xzfp0slzeqks2nwpyg
 creation_rules:
   - path_regex: host/[^/]+/secrets/.+$
     key_groups:
       - age:
-          - *kirill
+          - *key
+  - path_regex: user/[^/]+/secrets\.yaml$
+    key_groups:
+      - age:
+          - *key

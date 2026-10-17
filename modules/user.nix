@@ -14,5 +14,6 @@
         ./user/packages/kdenlive.nix
         ./user/quickshell.nix
         ./user/wob.nix
+        ./user/secrets.nix
     ];
 }
