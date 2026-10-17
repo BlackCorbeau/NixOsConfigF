@@ -1,9 +1,6 @@
-{ pkgs, lib, config, inputs, host, osConfig, ... }:
+{ pkgs, lib, config, inputs, host, ... }:
 let
-  secretPath =
-    if osConfig ? sops.secrets.wallhaven
-    then osConfig.sops.secrets.wallhaven.path
-    else "";
+  secretPath = config.sops.secrets."tokens/apis/wallhaven".path;
 
   wallpaper_changer = pkgs.writers.writePython3Bin "wallpaper_changer" {
     libraries = [ pkgs.python3Packages.requests ];
