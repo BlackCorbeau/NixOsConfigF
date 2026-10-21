@@ -5,6 +5,7 @@
         ./user/sleepMode.nix
         ./user/ghostty.nix
         ./user/qt.nix
+        ./user/helix.nix
         ./user/zed-idea.nix
         ./user/walker.nix
         ./user/btop.nix

@@ -4,5 +4,6 @@
     age.keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
 
     secrets."tokens/apis/wallhaven" = {};
+    secrets."tokens/apis/wakapi" = {};
   };
 }
