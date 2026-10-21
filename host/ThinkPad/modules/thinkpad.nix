@@ -13,7 +13,6 @@
   services = {
     fwupd.enable = true;
     thermald.enable = true;
-    fprintd.enable = true;
 
     logind.settings.Login = {
       HandleLidSwitch = "suspend-then-hibernate";
