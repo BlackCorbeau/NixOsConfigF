@@ -1,8 +1,50 @@
-{ pkgs, lib, ... }:
+{ config, pkgs, lib, ... }:
 let
   hyprLua = import ./hyprland/lua.nix { inherit lib; };
+
+  hyprlock = lib.getExe pkgs.hyprlock;
+  hyprctl = lib.getExe' config.wayland.windowManager.hyprland.package "hyprctl";
+  loginctl = lib.getExe' pkgs.systemd "loginctl";
+  pidof = lib.getExe' pkgs.procps "pidof";
+  fprintdList = lib.getExe' pkgs.fprintd "fprintd-list";
+  timeout = lib.getExe' pkgs.coreutils "timeout";
+  sleepCmd = lib.getExe' pkgs.coreutils "sleep";
+  sh = lib.getExe pkgs.bash;
+
+  hyprlockWait = pkgs.writeShellScript "hyprlock-wait-fprint" ''
+    for i in $(seq 1 60); do
+      if ${timeout} 1 ${fprintdList} kirill >/dev/null 2>&1; then
+        break
+      fi
+      ${sleepCmd} 1
+    done
+    exec ${hyprlock}
+  '';
 in {
-  wayland.windowManager.hyprland.settings.on = [ (hyprLua.onStart [ "hyprlock" ]) ];
+  wayland.windowManager.hyprland.settings.on = [ (hyprLua.onStart [ "${hyprlockWait}" ]) ];
+
+  # Hypridle listens to logind's PrepareForSleep signal: it locks the session
+  # before suspend and makes sure hyprlock is running (and the display is on)
+  # after resume.
+  services.hypridle = {
+    enable = true;
+    settings = {
+      general = {
+        lock_cmd = "${pidof} hyprlock >/dev/null || ${hyprlockWait}";
+        before_sleep_cmd = "${loginctl} lock-session";
+        after_sleep_cmd = "${pidof} hyprlock >/dev/null || ${hyprlockWait} & ${hyprctl} dispatch 'hl.dsp.dpms({action = \"on\"})'";
+      };
+
+      # Hypridle requires at least one listener, so keep a no-op timer that
+      # practically never fires. Screen locking is driven by sleep/resume only.
+      listener = [
+        {
+          timeout = 604800; # 7 days
+          on-timeout = "";
+        }
+      ];
+    };
+  };
 
   programs.hyprlock = let
     image = pkgs.fetchurl {
@@ -14,6 +56,17 @@ in {
     enable = true;
 
     settings = {
+      # Hyprlock's built-in fingerprint support watches logind's
+      # PrepareForSleep signal and re-arms itself after resume.  PAM-based
+      # fingerprint auth (security.pam.services.hyprlock.fprintAuth) does not
+      # survive the fingerprint device being reset during suspend.
+      auth.fingerprint = {
+        enabled = true;
+        ready_message = "Scan fingerprint to unlock";
+        present_message = "Scanning...";
+        retry_delay = 250;
+      };
+
       background = {
         path = lib.mkForce "${image}";
         blur_passes = 0;
