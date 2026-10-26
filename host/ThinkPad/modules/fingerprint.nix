@@ -152,6 +152,71 @@
     done
   '';
 
+  systemctl = lib.getExe' pkgs.systemd "systemctl";
+  busctl = lib.getExe' pkgs.systemd "busctl";
+  timeout = lib.getExe' pkgs.coreutils "timeout";
+  sleep = lib.getExe' pkgs.coreutils "sleep";
+  fprintdList = lib.getExe' pkgs.fprintd "fprintd-list";
+
+  # python-validity initializes the sensor before it registers with
+  # open-fprintd, so a successful ListEnrolledFingers call means the sensor is
+  # usable.  This is used as ExecStartPost and by greetd ordering.
+  waitForFprint = pkgs.writeShellScript "wait-for-fprint" ''
+    for ((i = 0; i < 80; i++)); do
+      if ${timeout} 1 ${fprintdList} root >/dev/null 2>&1; then
+        exit 0
+      fi
+      ${sleep} 0.5
+    done
+
+    echo "wait-for-fprint: fingerprint backend did not become ready" >&2
+    exit 0
+  '';
+
+  # The xHCI controller is reset during resume, which invalidates
+  # python-validity's USB handle.  Restart it from a systemd-sleep hook: the
+  # hook runs before logind emits PrepareForSleep(false), so hyprlock's
+  # built-in fingerprint auth sees a working sensor as soon as it resumes.
+  fprintResumeHook = pkgs.writeShellScript "fprint-resume" ''
+    if [ "$1" != "post" ]; then
+      exit 0
+    fi
+
+    # Stop the old instance first so its stale D-Bus target cannot be selected
+    # by the readiness checks below.  Start without blocking because
+    # python-validity's ExecStartPost waits for fprintd, but open-fprintd is
+    # still suspended until Resume is called below.
+    ${timeout} 10 ${systemctl} stop python3-validity.service || true
+    ${systemctl} start --no-block python3-validity.service || true
+
+    # Clear open-fprintd's suspended flag.  This also unblocks the new
+    # python-validity instance's ExecStartPost.
+    ${timeout} 10 ${busctl} call net.reactivated.Fprint /net/reactivated/Fprint/Manager \
+      net.reactivated.Fprint.Manager Resume || true
+
+    # Wait for the new backend to register.
+    for ((i = 0; i < 30; i++)); do
+      if ${timeout} 0.5 ${fprintdList} root >/dev/null 2>&1; then
+        break
+      fi
+      ${sleep} 0.1
+    done
+
+    # The target now exists, so Resume reinitializes the sensor.  Wait for it
+    # to become responsive before logind starts hyprlock's fingerprint auth.
+    ${timeout} 10 ${busctl} call net.reactivated.Fprint /net/reactivated/Fprint/Manager \
+      net.reactivated.Fprint.Manager Resume || true
+
+    for ((i = 0; i < 30; i++)); do
+      if ${timeout} 0.5 ${fprintdList} root >/dev/null 2>&1; then
+        exit 0
+      fi
+      ${sleep} 0.1
+    done
+
+    echo "fprint-resume: fingerprint backend did not become ready" >&2
+  '';
+
   sleepTargets = [
     "suspend.target"
     "hibernate.target"
@@ -175,8 +240,15 @@ in {
     polkit-1.fprintAuth = true;
     sudo.fprintAuth = true;
     login.fprintAuth = true;
-    hyprlock.fprintAuth = true;
+
+    # hyprlock still needs a PAM service for password authentication, but it
+    # must not run pam_fprintd: its own D-Bus fingerprint implementation is
+    # used instead.  Two implementations would fight over the device, and the
+    # PAM one breaks when the sensor is reset across suspend.
+    hyprlock = {};
   };
+
+  environment.etc."systemd/system-sleep/50-fprint-resume".source = fprintResumeHook;
 
   systemd.services = {
     open-fprintd = {
@@ -198,6 +270,7 @@ in {
       serviceConfig = {
         Type = "simple";
         ExecStart = "${python-validity}/bin/python-validity-service";
+        ExecStartPost = "-${waitForFprint}";
         Restart = "always";
         RestartSec = 2;
         RuntimeDirectory = "python-validity";
@@ -215,16 +288,16 @@ in {
         ExecStart = "${pkgs.open-fprintd}/lib/open-fprintd/suspend.py";
       };
     };
+  };
 
-    open-fprintd-resume = {
-      description = "Resume open-fprintd backends";
-      wantedBy = sleepTargets;
-      after = sleepTargets;
-      serviceConfig = {
-        Type = "oneshot";
-        ExecStart = "${pkgs.open-fprintd}/lib/open-fprintd/resume.py";
-      };
-    };
+  # The sleep hook above resumes open-fprintd before logind wakes the
+  # graphical session.  The stock open-fprintd-resume unit runs later and
+  # resets the sensor while hyprlock is already verifying, so it must not be
+  # enabled.  Order greetd (and therefore Hyprland/hyprlock) after the
+  # fingerprint backend so the first lock screen can use the sensor.
+  systemd.services.greetd = {
+    after = [ "python3-validity.service" ];
+    wants = [ "python3-validity.service" ];
   };
 
   environment.systemPackages = [
