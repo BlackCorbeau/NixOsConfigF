@@ -33,7 +33,6 @@
 
   host.laptop = true;
 
-  programs.gamemode.enable = true;
   hardware.bluetooth.enable = true;
   services.printing.enable = true;
 }
