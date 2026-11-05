@@ -10,6 +10,7 @@
       "https://ezkea.cachix.org"
       "https://risdeveau.cachix.org"
       "https://yazi.cachix.org"
+      "https://noctalia.cachix.org"
     ];
     extra-trusted-public-keys = [
       "main:tR2gNhCBJHKAlVgohPNHBhGnWL55tB8SxXmMWJe5lo8=" 
@@ -19,6 +20,7 @@
       "ezkea.cachix.org-1:ioBmUbJTZIKsHmWWXPe1FSFbeVe+afhfgqgTSNd34eI="
       "risdeveau.cachix.org-1:TsoFSVeLl7iKtUYGX7qsvKPjf2vbNLfLC5v3SAdU8r0="
       "yazi.cachix.org-1:Dcdz63NZKfvUCbDGngQDAZq6kOroIrFoyO064uvLh8k="
+      "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
     ];
   };
   
@@ -26,6 +28,7 @@
 
     ayugram-desktop.url = "github:/ayugram-port/ayugram-desktop/release?submodules=1";
     ags.url = "github:Aylur/ags/3ed9737bdbc8fc7a7c7ceef2165c9109f336bff6";
+    noctalia.url = "github:noctalia-dev/noctalia/cachix";
 
     zapret-discord-youtube.url = "github:kartavkun/zapret-discord-youtube";
     
@@ -41,7 +44,7 @@
       flake = false;
     };
 
-    hyprland.url = "github:hyprwm/Hyprland/v0.56.1";
+    hyprland.url = "github:hyprwm/Hyprland/v0.57.0";
     hyprland-plugins = {
       url = "github:hyprwm/hyprland-plugins";
       inputs.hyprland.follows = "hyprland";

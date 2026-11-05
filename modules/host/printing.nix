@@ -19,7 +19,9 @@ lib.mkIf config.services.printing.enable {
   };
 
   environment.systemPackages = with pkgs; [
-    sane-frontends
+    # sane-frontends is the old GTK2 frontend and gtk2 is marked broken in
+    # current nixpkgs.  scanimage/saned are provided by sane-backends through
+    # hardware.sane.enable; simple-scan covers the GUI.
     simple-scan
   ];
 }
