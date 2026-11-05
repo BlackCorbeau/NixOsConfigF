@@ -11,12 +11,16 @@ let
   sleepCmd = lib.getExe' pkgs.coreutils "sleep";
   sh = lib.getExe pkgs.bash;
 
+  busctlWait = lib.getExe' pkgs.systemd "busctl";
   hyprlockWait = pkgs.writeShellScript "hyprlock-wait-fprint" ''
-    for i in $(seq 1 60); do
-      if ${timeout} 1 ${fprintdList} kirill >/dev/null 2>&1; then
+    for i in $(seq 1 200); do
+      if ${timeout} 2 ${fprintdList} kirill >/dev/null 2>&1; then
         break
       fi
-      ${sleepCmd} 1
+      if ${timeout} 1 ${busctlWait} --system call net.reactivated.Fprint /net/reactivated/Fprint/Manager net.reactivated.Fprint.Manager GetDevices 2>/dev/null | grep -q "^ao [1-9]"; then
+        break
+      fi
+      ${sleepCmd} 0.5
     done
     exec ${hyprlock}
   '';
@@ -56,10 +60,7 @@ in {
     enable = true;
 
     settings = {
-      # Hyprlock's built-in fingerprint support watches logind's
-      # PrepareForSleep signal and re-arms itself after resume.  PAM-based
-      # fingerprint auth (security.pam.services.hyprlock.fprintAuth) does not
-      # survive the fingerprint device being reset during suspend.
+      # Use only built-in fingerprint auth
       auth.fingerprint = {
         enabled = true;
         ready_message = "Scan fingerprint to unlock";

@@ -249,10 +249,8 @@ in {
     sudo.fprintAuth = true;
     login.fprintAuth = true;
 
-    # hyprlock still needs a PAM service for password authentication, but it
-    # must not run pam_fprintd: its own D-Bus fingerprint implementation is
-    # used instead.  Two implementations would fight over the device, and the
-    # PAM one breaks when the sensor is reset across suspend.
+    # hyprlock uses its own D-Bus fingerprint implementation; do not create
+    # a PAM service for it to avoid conflicts with pam_fprintd.
     hyprlock = {};
   };
 
