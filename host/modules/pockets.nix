@@ -35,7 +35,6 @@
     tree
     slurp
     fastfetch
-    mako
     file
     btop
     nix-index

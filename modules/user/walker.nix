@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ config, lib, ... }:
 let
   hyprLua = import ./hyprland/lua.nix { inherit lib; };
 in {
@@ -12,7 +12,10 @@ in {
   };
 
   wayland.windowManager.hyprland.settings.bind = [
-    (hyprLua.bind "SUPER + D" (hyprLua.exec "walker"))
+    (hyprLua.bind "SUPER + D"
+      (if config.home.username == "kirill"
+      then hyprLua.execLauncher "qs ipc call launcher toggle"
+      else hyprLua.exec "walker"))
   ];
 
 }

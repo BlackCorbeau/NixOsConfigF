@@ -2,13 +2,30 @@
 let
   secretPath = config.sops.secrets."tokens/apis/wallhaven".path;
 
+  # Quickshell registers org.freedesktop.Notifications a few seconds after the
+  # Lucid process starts.  The changer runs from the compositor's start hook,
+  # so wait for the server instead of dropping the first notifications.
+  waitForNotifications = pkgs.writeShellScript "wait-for-notifications" ''
+    for _ in $(${pkgs.coreutils}/bin/seq 1 100); do
+      if ${lib.getExe' pkgs.dbus "dbus-send"} \
+        --session --dest=org.freedesktop.DBus --type=method_call --print-reply \
+        /org/freedesktop/DBus org.freedesktop.DBus.NameHasOwner \
+        string:org.freedesktop.Notifications 2>/dev/null \
+        | ${pkgs.gnugrep}/bin/grep -q 'boolean true'; then
+        exit 0
+      fi
+      ${pkgs.coreutils}/bin/sleep 0.2
+    done
+    exit 0
+  '';
+
   wallpaper_changer = pkgs.writers.writePython3Bin "wallpaper_changer" {
     libraries = [ pkgs.python3Packages.requests ];
     flakeIgnore = [ "E111" "E121" "E241" "E501" "E701" "E731" ];
   } /*py*/ ''
     import requests as requests
     from random import choice
-    from os import environ, getuid, listdir, makedirs, remove, replace, system
+    from os import environ, getuid, listdir, makedirs, remove, replace
     from os.path import exists, getmtime, isfile
     from subprocess import run
 
@@ -176,7 +193,10 @@ let
     finally:
       if filename is not None:
         notify("Applying wallpaper", 100)
-        system(f"${lib.getExe pkgs.awww} img {folder}/{filename} --transition-type center")
+        run([
+          "${config.home.homeDirectory}/.config/hypr/scripts/wallpaper/set-wallpaper.sh",
+          f"{folder}/{filename}",
+        ], check=False)
   '';
 in {
   imports = [(
@@ -189,7 +209,30 @@ in {
     }
   )];
 
-  home.packages = [ wallpaper_changer ];
+  home.packages = [
+    wallpaper_changer
+    pkgs.awww
+  ];
+
+  # Run the Wallhaven changer once per graphical session.  It pulls a fresh
+  # wallpaper (or falls back to the local cache when offline) and applies it
+  # through Lucid's set-wallpaper.sh.
+  systemd.user.services.wallpaper-changer = {
+    Unit = {
+      Description = "Download and apply a Wallhaven wallpaper";
+      Wants = [ "lucid.service" ];
+      After = [ "graphical-session.target" "lucid.service" ];
+      PartOf = [ "graphical-session.target" ];
+    };
+    Service = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStartPre = "${waitForNotifications}";
+      ExecStart = "${lib.getExe wallpaper_changer}";
+      TimeoutStartSec = "5min";
+    };
+    Install.WantedBy = [ "hyprland-session.target" ];
+  };
 
   wayland.windowManager.hyprland = let
     colors = config.lib.stylix.colors;
@@ -218,13 +261,13 @@ in {
           blur = {
             enabled = true;
             size = 16;
+            # One pass is noticeably cheaper on the ThinkPad's UHD 620; the
+            # two-pass blur is a likely contributor to workspace-slide hitches.
             passes = 2;
             new_optimizations = true;
           };
           shadow = {
-            enabled = true;
-            range = 4;
-            render_power = 3;
+            enabled = false;
           };
         };
 
@@ -270,12 +313,13 @@ in {
       ];
 
       on = [
-        (hyprLua.onStart [ "${lib.getExe wallpaper_changer}" ])
+        (hyprLua.onStart [ "systemctl --user start wallpaper-changer.service" ])
       ];
 
       bind = [
-        (hyprLua.bind "SUPER + W" (hyprLua.exec "${lib.getExe wallpaper_changer}"))
-        (hyprLua.bind "SUPER + SHIFT + S" (hyprLua.exec "${lib.getExe pkgs.grimblast} --notify --freeze copy area"))
+        (hyprLua.bind "SUPER + W" (hyprLua.execLauncher "qs ipc call launcher wallpaper"))
+        (hyprLua.bind "SUPER + SHIFT + W" (hyprLua.exec "${lib.getExe wallpaper_changer}"))
+        (hyprLua.bind "SUPER + SHIFT + S" (hyprLua.exec "qs ipc call snap region"))
         (hyprLua.bind "F11" (hyprLua.exec "ghostty -e sh -c hyprlock"))
       ];
     };

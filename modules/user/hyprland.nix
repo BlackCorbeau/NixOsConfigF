@@ -16,6 +16,7 @@ in {
     pamixer
     wofi
     clipse
+    cliphist
     wl-clipboard
     wl-clip-persist
     xclip
@@ -72,13 +73,19 @@ in {
         "systemctl --user start plasma-polkit-agent"
         "${lib.getExe' pkgs.dbus "dbus-update-activation-environment"} --systemd --all"
         "systemctl --user import-environment XDG_CURRENT_DESKTOP XDG_SESSION_DESKTOP XDG_SESSION_TYPE WAYLAND_DISPLAY DISPLAY GTK_USE_PORTAL QT_QPA_PLATFORMTHEME TDESKTOP_USE_GTK_FILE_DIALOG NIXOS_OZONE_WL ELECTRON_OZONE_PLATFORM_HINT"
-        "${lib.getExe' pkgs.awww "awww-daemon"}"
+        # awww-daemon is started by set-wallpaper.sh (Lucid's ExecStartPre).
+        # Starting it here too races that call and the second daemon aborts.
         "wl-clip-persist --clipboard both"
         "clipse -listen"
         "${lib.getExe' pkgs.udiskie "udiskie"}"
       ]) ];
       bind = [
         (hyprLua.bind "SUPER + V" (hyprLua.exec "ghostty --title=clipse -e clipse"))
+        (hyprLua.bind "SUPER + SHIFT + V" (hyprLua.execLauncher "qs ipc call launcher clipboard"))
+        (hyprLua.bind "Print" (hyprLua.exec "qs ipc call snap toggle"))
+        (hyprLua.bind "SUPER + Print" (hyprLua.exec "qs ipc call screenshot full"))
+        (hyprLua.bind "CTRL + Print" (hyprLua.exec "qs ipc call snap region"))
+        (hyprLua.bind "ALT + Print" (hyprLua.exec "qs ipc call snap window"))
         (hyprLua.bind "SUPER + RETURN" (hyprLua.exec "ghostty"))
         (hyprLua.bind "SUPER + Q" "hl.dsp.window.close()")
         (hyprLua.bind "SUPER + M" "hl.dsp.exit()")
