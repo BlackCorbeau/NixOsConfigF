@@ -16,7 +16,6 @@
             ./${name}/modules/hyprland.nix
             ./${name}/modules/style.nix
             ./${name}/home.nix
-            ./${name}/modules/waybar.nix
           ];
 
           home = {

@@ -14,7 +14,7 @@ in {
   wayland.windowManager.hyprland.settings.bind = [
     (hyprLua.bind "SUPER + D"
       (if config.home.username == "kirill"
-      then hyprLua.execLauncher "qs ipc call launcher toggle"
+      then hyprLua.execLauncher "noctalia msg panel-toggle launcher"
       else hyprLua.exec "walker"))
   ];
 

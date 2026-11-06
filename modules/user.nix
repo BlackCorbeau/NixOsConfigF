@@ -12,7 +12,6 @@
         ./user/zsh.nix
         ./user/packages/utils.nix
         ./user/packages/desktop.nix
-        ./user/quickshell.nix
         ./user/secrets.nix
     ];
 }

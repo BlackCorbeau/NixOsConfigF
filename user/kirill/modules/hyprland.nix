@@ -2,16 +2,17 @@
 let
   secretPath = config.sops.secrets."tokens/apis/wallhaven".path;
 
-  # Quickshell registers org.freedesktop.Notifications a few seconds after the
-  # Lucid process starts.  The changer runs from the compositor's start hook,
-  # so wait for the server instead of dropping the first notifications.
+  # Wait until Noctalia's IPC and notification service are ready before the
+  # Wallhaven job starts. Noctalia owns org.freedesktop.Notifications.
+  noctaliaExe = lib.getExe inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default;
   waitForNotifications = pkgs.writeShellScript "wait-for-notifications" ''
     for _ in $(${pkgs.coreutils}/bin/seq 1 100); do
-      if ${lib.getExe' pkgs.dbus "dbus-send"} \
-        --session --dest=org.freedesktop.DBus --type=method_call --print-reply \
-        /org/freedesktop/DBus org.freedesktop.DBus.NameHasOwner \
-        string:org.freedesktop.Notifications 2>/dev/null \
-        | ${pkgs.gnugrep}/bin/grep -q 'boolean true'; then
+      if ${noctaliaExe} msg status >/dev/null 2>&1 && \
+        ${lib.getExe' pkgs.dbus "dbus-send"} \
+          --session --dest=org.freedesktop.DBus --type=method_call --print-reply \
+          /org/freedesktop/DBus org.freedesktop.DBus.NameHasOwner \
+          string:org.freedesktop.Notifications 2>/dev/null \
+          | ${pkgs.gnugrep}/bin/grep -q 'boolean true'; then
         exit 0
       fi
       ${pkgs.coreutils}/bin/sleep 0.2
@@ -194,7 +195,9 @@ let
       if filename is not None:
         notify("Applying wallpaper", 100)
         run([
-          "${config.home.homeDirectory}/.config/hypr/scripts/wallpaper/set-wallpaper.sh",
+          "${noctaliaExe}",
+          "msg",
+          "wallpaper-set",
           f"{folder}/{filename}",
         ], check=False)
   '';
@@ -209,19 +212,15 @@ in {
     }
   )];
 
-  home.packages = [
-    wallpaper_changer
-    pkgs.awww
-  ];
+  home.packages = [ wallpaper_changer ];
 
-  # Run the Wallhaven changer once per graphical session.  It pulls a fresh
-  # wallpaper (or falls back to the local cache when offline) and applies it
-  # through Lucid's set-wallpaper.sh.
+  # Run the Wallhaven changer once per graphical session. It downloads a
+  # fresh wallpaper (or falls back to the local cache) and applies it through
+  # Noctalia's native wallpaper renderer.
   systemd.user.services.wallpaper-changer = {
     Unit = {
       Description = "Download and apply a Wallhaven wallpaper";
-      Wants = [ "lucid.service" ];
-      After = [ "graphical-session.target" "lucid.service" ];
+      After = [ "graphical-session.target" ];
       PartOf = [ "graphical-session.target" ];
     };
     Service = {
@@ -246,7 +245,7 @@ in {
           border_size = 2;
           "col.active_border" = lib.mkForce {
             colors = [
-              "rgba(${colors.base0C}ee)"
+              "rgba(${colors.base0B}ee)"
               "rgba(${colors.base0B}ee)"
             ];
             angle = 45;
@@ -317,9 +316,11 @@ in {
       ];
 
       bind = [
-        (hyprLua.bind "SUPER + W" (hyprLua.execLauncher "qs ipc call launcher wallpaper"))
+        (hyprLua.bind "SUPER + SHIFT + D" (hyprLua.execLauncher "noctalia msg desktop-widgets-toggle-edit"))
+        (hyprLua.bind "SUPER + SHIFT + G" (hyprLua.execLauncher "noctalia msg panel-toggle control-center"))
+        (hyprLua.bind "SUPER + W" (hyprLua.execLauncher "noctalia msg panel-toggle wallpaper"))
         (hyprLua.bind "SUPER + SHIFT + W" (hyprLua.exec "${lib.getExe wallpaper_changer}"))
-        (hyprLua.bind "SUPER + SHIFT + S" (hyprLua.exec "qs ipc call snap region"))
+        (hyprLua.bind "SUPER + SHIFT + S" (hyprLua.exec "noctalia msg screenshot-region --annotate"))
         (hyprLua.bind "F11" (hyprLua.exec "ghostty -e sh -c hyprlock"))
       ];
     };

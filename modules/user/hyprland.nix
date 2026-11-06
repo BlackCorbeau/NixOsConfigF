@@ -70,22 +70,23 @@ in {
         { match = { float = false; workspace = "w[t1]"; }; border_size = 0; }
       ];
       on = [ (hyprLua.onStart [
+        "noctalia"
         "systemctl --user start plasma-polkit-agent"
         "${lib.getExe' pkgs.dbus "dbus-update-activation-environment"} --systemd --all"
         "systemctl --user import-environment XDG_CURRENT_DESKTOP XDG_SESSION_DESKTOP XDG_SESSION_TYPE WAYLAND_DISPLAY DISPLAY GTK_USE_PORTAL QT_QPA_PLATFORMTHEME TDESKTOP_USE_GTK_FILE_DIALOG NIXOS_OZONE_WL ELECTRON_OZONE_PLATFORM_HINT"
-        # awww-daemon is started by set-wallpaper.sh (Lucid's ExecStartPre).
-        # Starting it here too races that call and the second daemon aborts.
         "wl-clip-persist --clipboard both"
         "clipse -listen"
         "${lib.getExe' pkgs.udiskie "udiskie"}"
       ]) ];
       bind = [
+        # Keep Clipse's TUI on Super+V; Super+Shift+V opens Noctalia's
+        # built-in clipboard history panel (the Win+V-style picker).
         (hyprLua.bind "SUPER + V" (hyprLua.exec "ghostty --title=clipse -e clipse"))
-        (hyprLua.bind "SUPER + SHIFT + V" (hyprLua.execLauncher "qs ipc call launcher clipboard"))
-        (hyprLua.bind "Print" (hyprLua.exec "qs ipc call snap toggle"))
-        (hyprLua.bind "SUPER + Print" (hyprLua.exec "qs ipc call screenshot full"))
-        (hyprLua.bind "CTRL + Print" (hyprLua.exec "qs ipc call snap region"))
-        (hyprLua.bind "ALT + Print" (hyprLua.exec "qs ipc call snap window"))
+        (hyprLua.bind "SUPER + SHIFT + V" (hyprLua.execLauncher "noctalia msg panel-toggle clipboard"))
+        (hyprLua.bind "Print" (hyprLua.exec "noctalia msg screenshot-region"))
+        (hyprLua.bind "SUPER + Print" (hyprLua.exec "noctalia msg screenshot-fullscreen"))
+        (hyprLua.bind "CTRL + Print" (hyprLua.exec "noctalia msg screenshot-region --annotate"))
+        (hyprLua.bind "ALT + Print" (hyprLua.exec "noctalia msg screenshot-window"))
         (hyprLua.bind "SUPER + RETURN" (hyprLua.exec "ghostty"))
         (hyprLua.bind "SUPER + Q" "hl.dsp.window.close()")
         (hyprLua.bind "SUPER + M" "hl.dsp.exit()")
