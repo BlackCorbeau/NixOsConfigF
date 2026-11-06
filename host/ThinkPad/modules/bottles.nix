@@ -1,5 +1,5 @@
-{pkgs-stable, ...}: {
-  environment.systemPackages = with pkgs-stable; [
-    bottles
+{pkgs, ...}: {
+  environment.systemPackages = [
+    (pkgs.bottles.override { removeWarningPopup = true; })
   ];
 }
