@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, lib, ... }: {
   home.packages = [ pkgs.nh ];
   programs = {
     zoxide.enable = true;
@@ -89,7 +89,7 @@
         rebuildFlake = "sudo nixos-rebuild switch --flake /home/kirill/.config/f --impure";
         openFlake = "vim /home/kirill/.config/f/flake.nix";
         swichWalls = "wallpaper_changer";
-        shell = "nix-shell . --run zsh";
+        shell = "${lib.getExe' pkgs.nix-output-monitor "nom-shell"} . --run zsh";
         testZapret = "sudo zapret-test-strategies";
 
         charge = "sudo tlp setcharge 90 95 BAT0 && sudo tlp setcharge 90 95 BAT1 && echo 'Зарядка обеих батарей до 95% запущена (только на текущую сессию)'";
