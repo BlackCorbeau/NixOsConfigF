@@ -1,0 +1,12 @@
+id = "kirill/system-dashboard"
+name = "System Dashboard"
+version = "1.1.0"
+plugin_api = 16
+author = "Kirill"
+license = "MIT"
+description = "Compact interactive system resource monitor"
+tags = ["desktop", "system", "monitor"]
+
+[[desktop_widget]]
+id = "dashboard"
+entry = "widget.luau"

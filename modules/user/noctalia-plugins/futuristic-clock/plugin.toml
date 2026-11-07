@@ -1,0 +1,12 @@
+id = "kirill/futuristic-clock"
+name = "Futuristic Clock"
+version = "1.0.0"
+plugin_api = 3
+author = "Kirill"
+license = "MIT"
+description = "A futuristic desktop clock with a seven-day Open-Meteo forecast."
+tags = ["desktop", "clock", "weather"]
+
+[[desktop_widget]]
+id = "clock"
+entry = "clock.luau"
