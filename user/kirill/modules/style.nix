@@ -73,7 +73,10 @@ in {
 
     opacity = {
       popups = .8;
-      terminal = .5;
+      # 0.5 was almost fully see-through, so desktop widgets stayed sharp
+      # behind the text. 0.78 keeps a hint of the wallpaper visible while
+      # giving code enough contrast to be comfortable.
+      terminal = .78;
     };
   };
 

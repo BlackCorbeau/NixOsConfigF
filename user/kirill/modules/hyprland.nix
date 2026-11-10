@@ -259,9 +259,12 @@ in {
           rounding = 10;
           blur = {
             enabled = true;
-            size = 16;
-            # One pass is noticeably cheaper on the ThinkPad's UHD 620; the
-            # two-pass blur is a likely contributor to workspace-slide hitches.
+            # A larger radius softens the desktop/widgets behind the
+            # translucent terminal into a background glow instead of
+            # legible shapes that fight with code in the foreground.
+            size = 28;
+            # Keep this at two passes: more passes are noticeably heavier on
+            # the ThinkPad's UHD 620 and hurt workspace-slide smoothness.
             passes = 2;
             new_optimizations = true;
           };
