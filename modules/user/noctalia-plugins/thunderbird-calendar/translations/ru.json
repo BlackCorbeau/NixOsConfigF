@@ -1,0 +1,6 @@
+{
+  "settings.start_monday.label": "Неделя с понедельника",
+  "settings.start_monday.description": "Показывать понедельник первым в сетке месяца.",
+  "settings.refresh_seconds.label": "Интервал обновления",
+  "settings.refresh_seconds.description": "Как часто перечитывать кэш календаря Thunderbird, в секундах."
+}

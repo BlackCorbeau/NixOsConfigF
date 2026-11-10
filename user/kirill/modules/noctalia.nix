@@ -84,6 +84,7 @@ in {
           "yahya637/process-monitor"
           "kirill/futuristic-clock"
           "kirill/system-dashboard"
+          "kirill/thunderbird-calendar"
         ];
 
         auto_update = "all";
@@ -148,6 +149,7 @@ in {
           "ram_gauge"
           "network_graph"
           "gpu_graph"
+          "calendar"
         ];
 
         widget = {
@@ -216,6 +218,22 @@ in {
               color = "primary";
               show_label = true;
               background = true;
+            };
+          };
+
+          calendar = {
+            type = "kirill/thunderbird-calendar:calendar";
+            # The box is kept at the expanded width so opening the events panel
+            # never resizes the widget and never shifts the month grid. cx is
+            # offset by half that width to keep the month card where it was.
+            cx = 481.0;
+            cy = 252.0;
+            box_width = 636.0;
+            box_height = 0.0;
+
+            settings = {
+              start_monday = true;
+              refresh_seconds = 120;
             };
           };
         };
@@ -423,6 +441,12 @@ in {
 
   home.file.".local/share/noctalia/plugins/system-dashboard".source =
     ../../../modules/user/noctalia-plugins/system-dashboard;
+
+  home.file.".local/share/noctalia/plugins/thunderbird-calendar" = {
+    source = ../../../modules/user/noctalia-plugins/thunderbird-calendar;
+    # Replace the temporary symlink used while developing the widget.
+    force = true;
+  };
 
   home.packages = with pkgs; [
     brightnessctl

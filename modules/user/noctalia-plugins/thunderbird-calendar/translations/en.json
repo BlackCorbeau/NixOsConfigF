@@ -1,0 +1,6 @@
+{
+  "settings.start_monday.label": "Week starts on Monday",
+  "settings.start_monday.description": "Show Monday first in the month grid.",
+  "settings.refresh_seconds.label": "Refresh interval",
+  "settings.refresh_seconds.description": "How often to re-read Thunderbird's calendar cache, in seconds."
+}

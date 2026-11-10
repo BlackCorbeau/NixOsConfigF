@@ -1,0 +1,30 @@
+id = "kirill/thunderbird-calendar"
+name = "Thunderbird Calendar"
+version = "1.0.0"
+plugin_api = 24
+author = "Kirill"
+license = "MIT"
+description = "Month calendar with the selected day's events, read from Thunderbird's local cache."
+tags = ["desktop", "calendar"]
+dependencies = ["python3"]
+
+[[desktop_widget]]
+id = "calendar"
+entry = "calendar.luau"
+
+  [[desktop_widget.setting]]
+  key = "start_monday"
+  type = "bool"
+  label_key = "settings.start_monday.label"
+  description_key = "settings.start_monday.description"
+  default = true
+
+  [[desktop_widget.setting]]
+  key = "refresh_seconds"
+  type = "int"
+  label_key = "settings.refresh_seconds.label"
+  description_key = "settings.refresh_seconds.description"
+  default = 120
+  min = 30
+  max = 3600
+  step = 30
