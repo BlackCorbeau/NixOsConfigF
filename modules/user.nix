@@ -1,7 +1,8 @@
 {config, lib, ...}: {
     imports = [
         ./user/yazi.nix
-        ./user/sleepMode.nix
+        # ./user/sleepMode.nix
+        ./user/noctaliaLockscreen.nix
         ./user/ghostty.nix
         ./user/qt.nix
         ./user/helix.nix

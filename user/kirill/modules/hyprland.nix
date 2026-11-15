@@ -320,11 +320,12 @@ in {
 
       bind = [
         (hyprLua.bind "SUPER + SHIFT + D" (hyprLua.execLauncher "noctalia msg desktop-widgets-toggle-edit"))
+        (hyprLua.bind "SUPER + SHIFT + L" (hyprLua.execLauncher "noctalia msg lockscreen-widgets-toggle-edit"))
         (hyprLua.bind "SUPER + SHIFT + G" (hyprLua.execLauncher "noctalia msg panel-toggle control-center"))
         (hyprLua.bind "SUPER + W" (hyprLua.execLauncher "noctalia msg panel-toggle wallpaper"))
         (hyprLua.bind "SUPER + SHIFT + W" (hyprLua.exec "${lib.getExe wallpaper_changer}"))
         (hyprLua.bind "SUPER + SHIFT + S" (hyprLua.exec "noctalia msg screenshot-region --no-annotate --copy-to-clipboard --no-save-to-file"))
-        (hyprLua.bind "F11" (hyprLua.exec "ghostty -e sh -c hyprlock"))
+        (hyprLua.bind "F11" (hyprLua.exec "noctalia msg session lock"))
       ];
     };
   };
