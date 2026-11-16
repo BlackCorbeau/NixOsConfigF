@@ -1,0 +1,12 @@
+id = "kirill/holographic-clock"
+name = "Holographic Clock"
+version = "1.0.0"
+plugin_api = 16
+author = "Kirill"
+license = "MIT"
+description = "A rectangular holographic digital clock for the Noctalia desktop."
+tags = ["desktop", "clock", "holographic"]
+
+[[desktop_widget]]
+id = "clock"
+entry = "widget.luau"

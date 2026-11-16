@@ -83,6 +83,7 @@ in {
           "styrish/modernclock"
           "yahya637/process-monitor"
           "kirill/futuristic-clock"
+          "kirill/holographic-clock"
           "kirill/system-dashboard"
           "kirill/thunderbird-calendar"
         ];
@@ -150,6 +151,7 @@ in {
           "network_graph"
           "gpu_graph"
           "calendar"
+          "holographic_clock"
         ];
 
         widget = {
@@ -235,6 +237,15 @@ in {
               start_monday = true;
               refresh_seconds = 120;
             };
+          };
+
+          holographic_clock = {
+            type = "kirill/holographic-clock:clock";
+            cx = 1020.0;
+            cy = 250.0;
+            box_width = 390.0;
+            box_height = 0.0;
+            settings = { };
           };
         };
       };
@@ -438,6 +449,9 @@ in {
   # Nix-managed local Noctalia plugins.
   home.file.".local/share/noctalia/plugins/futuristic-clock".source =
     ../../../modules/user/noctalia-plugins/futuristic-clock;
+
+  home.file.".local/share/noctalia/plugins/holographic-clock".source =
+    ../../../modules/user/noctalia-plugins/holographic-clock;
 
   home.file.".local/share/noctalia/plugins/system-dashboard".source =
     ../../../modules/user/noctalia-plugins/system-dashboard;
