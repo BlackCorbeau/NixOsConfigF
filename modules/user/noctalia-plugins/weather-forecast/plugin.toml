@@ -1,0 +1,13 @@
+id = "kirill/weather-forecast"
+name = "Weather Forecast"
+version = "1.1.0"
+plugin_api = 31
+author = "Kirill"
+license = "MIT"
+description = "A themed seven-day forecast with a temperature curve and daily markers."
+dependencies = ["python3"]
+tags = ["desktop", "weather", "forecast"]
+
+[[desktop_widget]]
+id = "forecast"
+entry = "forecast.luau"

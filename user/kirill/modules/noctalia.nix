@@ -84,6 +84,7 @@ in {
           "yahya637/process-monitor"
           "kirill/futuristic-clock"
           "kirill/holographic-clock"
+          "kirill/weather-forecast"
           "kirill/system-dashboard"
           "kirill/thunderbird-calendar"
         ];
@@ -152,6 +153,7 @@ in {
           "gpu_graph"
           "calendar"
           "holographic_clock"
+          "weather_forecast"
         ];
 
         widget = {
@@ -246,6 +248,14 @@ in {
             box_width = 390.0;
             box_height = 0.0;
             settings = { };
+          };
+          # Seven-day forecast card in the existing Noctalia theme.
+          weather_forecast = {
+            type = "kirill/weather-forecast:forecast";
+            cx = 1450.0;
+            cy = 170.0;
+            box_width = 420.0;
+            box_height = 220.0;
           };
         };
       };
@@ -452,6 +462,8 @@ in {
 
   home.file.".local/share/noctalia/plugins/holographic-clock".source =
     ../../../modules/user/noctalia-plugins/holographic-clock;
+  home.file.".local/share/noctalia/plugins/weather-forecast".source =
+    ../../../modules/user/noctalia-plugins/weather-forecast;
 
   home.file.".local/share/noctalia/plugins/system-dashboard".source =
     ../../../modules/user/noctalia-plugins/system-dashboard;
