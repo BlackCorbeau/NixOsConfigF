@@ -9,7 +9,7 @@
     ./host/postgresql.nix
     ./host/gamemode.nix
     ./host/printing.nix
-    #./host/zapret-config.nix
+    ./host/zapret-config.nix
     ./host/network.nix
     #./host/ai-agent.nix
   ];
