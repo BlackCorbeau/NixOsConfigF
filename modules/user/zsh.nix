@@ -83,7 +83,7 @@
         rebuildHome = "home-manager switch --flake ~/.config/f";
         rebuildHomeSudo = "sudo home-manager switch --flake ~/.config/f";
         openConfiguration = "sudo nano ~/.config/f/nixos/hosts/usconfig/configuration.nix";
-        openHyprland = "vim .config/f/home-manager/data/hyprland.nix";
+        openNiri = "vim ~/.config/nixos/user/kirill/modules/niri.nix";
         openZSH = "vim .config/f/home-manager/zsh.nix";
         openWayBar = "vim .config/f/home-manager/data/waybar.nix";
         rebuildFlake = "sudo nixos-rebuild switch --flake /home/kirill/.config/f --impure";

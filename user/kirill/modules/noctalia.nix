@@ -271,7 +271,9 @@ in {
         date_format = "%d.%m.%Y";
         telemetry_enabled = false;
         setup_wizard_enabled = false;
-        polkit_agent = false; # plasma-polkit-agent is already started by Hyprland.
+        # Use Noctalia's built-in polkit agent; the old Plasma 5 unit no longer
+        # exists in nixos-unstable.
+        polkit_agent = true;
         # Enable Noctalia's own Win+V-style clipboard history panel.
         clipboard_enabled = true;
         clipboard_keep_from_closed_apps = true;
@@ -302,6 +304,15 @@ in {
           copy_to_clipboard = true;
           format = "png";
         };
+      };
+
+      # Keep the bar compact like the old Hyprland workspace indicator:
+      # show populated workspaces and the currently selected empty workspace only.
+      widget.workspaces = {
+        hide_when_empty = true;
+        labels_only_when_occupied = true;
+        label_source = "id";
+        max_label_chars = 2;
       };
 
       bar.default = {

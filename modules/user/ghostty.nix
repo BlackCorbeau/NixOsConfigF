@@ -16,6 +16,12 @@ in {
       confirm-close-surface = false;
       copy-on-select = false;
       title-report = true;
+      # Match the old Hyprland terminal: neutral black with the original 0.78
+      # transparency. The green tint is gone because the canvas is forced black
+      # and Niri now draws the active border as an outline, not behind it.
+      background = "000000";
+      background-opacity = 0.78;
+      background-blur = 28;
 
       custom-shader = "${shaders}/cursor_warp.glsl";
     };
