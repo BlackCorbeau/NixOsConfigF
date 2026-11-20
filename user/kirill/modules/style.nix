@@ -21,6 +21,13 @@ in {
       hyprland.enable = false;
       waybar.enable = false;
       gnome-text-editor.enable = false;
+
+      # Keep Ghostty's canvas neutral black. Stylix still supplies its foreground
+      # and accent palette, but base00 and opacity are controlled explicitly.
+      ghostty = {
+        colors.override.base00 = "000000";
+        opacity.enable = false;
+      };
     };
 
     base16Scheme = "${pkgs.base16-schemes}/share/themes/tokyo-city-dark.yaml";

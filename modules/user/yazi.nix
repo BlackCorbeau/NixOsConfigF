@@ -121,15 +121,6 @@ in {
     Exec=${lib.getExe fileManager1}
   '';
 
-  wayland.windowManager.hyprland.settings.window_rule = [
-    {
-      match.class = "dragon-drop";
-      move = [
-        "(cursor_x-(window_w*0.5))"
-        "(cursor_y-(window_h*0.5))"
-      ];
-    }
-  ];
 
   programs.yazi = {
     package = yaziPkg;

@@ -1,19 +1,14 @@
-# Noctalia's built-in lockscreen, used instead of hyprlock.
-#
-# The old hyprlock/hypridle setup lives in ./sleepMode.nix, which is no longer
-# imported (see ./../user.nix). This module recreates the parts worth keeping
-# from it: the same background photo, the date/time clock and the dark
-# password field.
+# Noctalia's built-in lockscreen. This module is compositor-independent.
+# It retains the existing background, clock, login box and fingerprint support.
 { config, lib, pkgs, ... }:
 let
-  hyprLua = import ./hyprland/lua.nix { inherit lib; };
   noctalia = lib.getExe config.programs.noctalia.package;
   seq = lib.getExe' pkgs.coreutils "seq";
   sleep = lib.getExe' pkgs.coreutils "sleep";
 
-  # hyprlock used to be launched together with Hyprland, so every session
-  # started locked. Keep that behaviour for Noctalia: wait until its IPC is up
-  # (the app is started from the same hyprland.start hook), then lock once.
+  # Keep the previous behaviour where each fresh graphical session starts
+  # locked. Niri brings up graphical-session.target; this service waits for
+  # Noctalia's IPC before asking it to lock.
   lockOnStart = pkgs.writeShellScript "noctalia-lock-on-start" ''
     for _ in $(${seq} 1 150); do
       if ${noctalia} msg status >/dev/null 2>&1; then
@@ -24,7 +19,7 @@ let
     exit 1
   '';
 
-  # Same photo hyprlock used as its background (see ./sleepMode.nix).
+  # The existing lock-screen background image is retained.
   lockBackground = pkgs.fetchurl {
     name = "lock_background.png";
     url = "https://pibig.info/uploads/posts/2022-11/thumbs/1668799231_10-pibig-info-p-nyaya-oboi-11.png";
@@ -99,9 +94,18 @@ in {
   # over this file; remove the `[lockscreen_widgets]` section from that state
   # file to reset to these values.
 
-  # Show the lock screen right after login, like hyprlock did via its
-  # hyprland.start hook in ./sleepMode.nix.
-  wayland.windowManager.hyprland.settings.on = [ (hyprLua.onStart [ "${lockOnStart}" ]) ];
+  systemd.user.services.noctalia-lock-on-start = {
+    Unit = {
+      Description = "Lock the Noctalia session when the graphical session starts";
+      After = [ "graphical-session.target" ];
+      PartOf = [ "graphical-session.target" ];
+    };
+    Service = {
+      Type = "oneshot";
+      ExecStart = "${lockOnStart}";
+    };
+    Install.WantedBy = [ "graphical-session.target" ];
+  };
 
   programs.noctalia.settings = {
     lockscreen = {
@@ -111,8 +115,7 @@ in {
       allow_empty_password = false;
       grace_period_seconds = 0;
 
-      # Same photo hyprlock used, no blur, theme tint instead of hyprlock's
-      # brightness/contrast/vibrancy tuning.
+      # Keep the existing image and Noctalia tint configuration.
       wallpaper = "${lockBackground}";
       blurred_desktop = false;
       blur_intensity = 0.0;

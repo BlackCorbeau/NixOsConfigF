@@ -299,7 +299,7 @@ in {
   # The sleep hook above resumes open-fprintd before logind wakes the
   # graphical session.  The stock open-fprintd-resume unit runs later and
   # resets the sensor while hyprlock is already verifying, so it must not be
-  # enabled.  Order greetd (and therefore Hyprland/hyprlock) after the
+  # enabled.  Order greetd (and therefore Niri/Noctalia lockscreen) after the
   # fingerprint backend so the first lock screen can use the sensor.
   systemd.services.greetd = {
     after = [ "python3-validity.service" ];

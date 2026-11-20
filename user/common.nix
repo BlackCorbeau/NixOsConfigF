@@ -13,7 +13,7 @@
             inputs.stylix.homeModules.stylix
             ../modules/user.nix
             ./${name}/modules/git.nix
-            ./${name}/modules/hyprland.nix
+            ./${name}/modules/niri.nix
             ./${name}/modules/style.nix
             ./${name}/home.nix
           ];
@@ -51,7 +51,14 @@
 
   services.greetd = let
     tuigreet = lib.getExe pkgs.tuigreet;
-    session = lib.getExe' inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.default "start-hyprland";
+    session = pkgs.writeShellScript "niri-session-${name}" ''
+      export PATH="/etc/profiles/per-user/${name}/bin:$PATH"
+      hm_session_vars="/etc/profiles/per-user/${name}/etc/profile.d/hm-session-vars.sh"
+      if [ -r "$hm_session_vars" ]; then
+        . "$hm_session_vars"
+      fi
+      exec ${config.programs.niri.package}/bin/niri-session
+    '';
   in {
     enable = true;
     settings = {
