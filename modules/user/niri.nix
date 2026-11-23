@@ -101,6 +101,19 @@ let
     '';
   };
 
+  # Move the focused window to the other monitor, then into workspace N there.
+  # With two outputs `next` toggles between them. `--focus false` keeps the
+  # keyboard focus on the destination monitor after the window is placed.
+  moveToOtherMonitorWorkspace =
+    lib.concatStringsSep "\n" (lib.concatMap
+      (n: let
+        num = toString n;
+        key = if n == 10 then "0" else num;
+      in [
+        ''Super+Alt+${key} hotkey-overlay-title="Move window to other monitor, workspace ${num}" { spawn-sh "${lib.getExe pkgs.niri} msg action move-window-to-monitor-next && ${lib.getExe pkgs.niri} msg action move-window-to-workspace --focus false ${num}"; }''
+      ])
+      (lib.range 1 10));
+
   # Each source module contributes Nix strings to niriConfig. This renderer
   # combines them into the single config.kdl consumed by Niri; no KDL source
   # files are kept in the repository.
@@ -223,6 +236,9 @@ in
         Super+Up hotkey-overlay-title="Focus window above" { focus-window-up; }
         Super+Down hotkey-overlay-title="Focus window below" { focus-window-down; }
 
+        // Two-monitor navigation. With two outputs, `next` toggles between them.
+        Super+Tab hotkey-overlay-title="Switch to next monitor" { focus-monitor-next; }
+
         // Move the focused column horizontally or a window vertically.
         Super+Shift+Left hotkey-overlay-title="Move column left" { move-column-left; }
         Super+Shift+Right hotkey-overlay-title="Move column right" { move-column-right; }
@@ -264,6 +280,9 @@ in
         Super+Shift+8 hotkey-overlay-title="Move window to workspace 8" { move-window-to-workspace focus=false 8; }
         Super+Shift+9 hotkey-overlay-title="Move window to workspace 9" { move-window-to-workspace focus=false 9; }
         Super+Shift+0 hotkey-overlay-title="Move window to workspace 10" { move-window-to-workspace focus=false 10; }
+
+        // Send the focused window to the other monitor's workspace.
+        ${moveToOtherMonitorWorkspace}
 
         // Workspace scroll and keyboard backlight.
         Super+WheelScrollDown hotkey-overlay-title="Switch to next workspace" cooldown-ms=150 { focus-workspace-down; }
